@@ -1,0 +1,178 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class GunScript : MonoBehaviour {
+	PlayerController pc;
+	// bullet stuff
+	public Rigidbody2D bullet;
+	public float bullet_speed = 30f;
+	public Transform firingLocation;
+	public Transform firingLocation2;
+	bool firingDone = true;
+	private int numShots = 0;
+	public int totalShotsAllowed = 3;
+
+	// Interval timer (between every totalShots
+	public float waitTime = 3f;
+	private float timer = 0f;
+	// time between each individual shot
+	public float shotWaitRC = 0.40f;
+	public float shotWaitCH = 0.25f;
+	public float shotWait = 0.40f;
+	private float shotWaitTimer = 0f;
+	// which mode is it in?
+	public bool shipMode = false;
+
+	// charge mode
+	BulletScript script;
+	Rigidbody2D chargedShot;
+	CircleCollider2D chargedCollider;
+	private int chargeLevel = 0;
+	public int totalCharge = 3; // maximum 3 charges
+	public float chargeTime = 1f; 	// charging times before max - *3 of charge time to get max charge
+	private float chargeTimer = 0f;
+
+	public bool debug = true;
+	public AudioClip mode_change;
+
+	// rapid fire mode
+	public bool rf_c = true; // rapid fire or charge mode
+	// true is rapid fire
+	// false is charge
+
+
+	// Use this for initialization
+	void Start () {
+		pc = GetComponentInParent<PlayerController> ();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		// switch mdes // debug only
+		if (Input.GetButtonDown("Switch Mode")&&debug) {
+			AudioSource.PlayClipAtPoint(mode_change, transform.position);
+			rf_c = !rf_c;
+			if (rf_c){ shotWait = shotWaitRC; } // switch between the two wait times
+			else { shotWait = shotWaitCH; }
+		}
+
+		// ATTACK
+		// for rapid fire very easy
+		if (rf_c && Input.GetButton ("FireBullet")) {
+			fire ();
+		} else if (firingDone && Input.GetButtonDown ("FireBullet")) { 
+			// else if charged mode and valid for firing
+			fire ();
+			chargeTimer = Time.time + chargeTime;
+		}
+
+		if (!rf_c) { // if charge mode
+			chargedUpdates ();
+		}
+	}
+
+	void chargedUpdates() {
+		float time = Time.time; // current time
+		if (Input.GetButton ("FireBullet")) { // if charge mode and holding fire button
+			if (time>=chargeTimer&&chargeLevel<=totalCharge) { // if charged for a certain time
+				charge();
+				chargeTimer = time + chargeTime;
+				script.charged = true;
+			}
+			if (chargeLevel>0) {
+				Vector3 scale = chargedShot.transform.localScale;
+				if (pc.facingRight) {
+					scale.x = Mathf.Abs(scale.x)*1;
+				} else {
+					scale.x = Mathf.Abs(scale.x)*-1;
+				}
+				chargedShot.transform.localScale = scale;
+				chargedShot.transform.position = pc.transform.position;
+			}
+		}
+		
+		if (Input.GetButtonUp ("FireBullet")&&chargedShot!=null) {
+			chargedCollider.enabled = true;
+			pc.anim.SetTrigger("shoot");
+			if (shipMode) {
+				chargedShot.velocity = new Vector2 (0f, bullet_speed);
+			}
+			else {
+				chargedShot.velocity = new Vector2 (
+					Mathf.Sign(chargedShot.transform.localScale.x)*bullet_speed, 0f);
+			}
+			chargeLevel = 0;
+			chargedShot = null;
+		}
+
+		limitFire ();
+	}
+
+	void charge() {
+		numShots = 0;
+		if (chargedShot==null) {
+			chargedShot = Instantiate (bullet, pc.transform.position, Quaternion.identity) as Rigidbody2D;
+			chargedShot.gameObject.SetActive(true);
+			chargedCollider = chargedShot.GetComponent<CircleCollider2D>();
+			chargedCollider.enabled = false;// disable the collider first
+			script = chargedShot.GetComponent<BulletScript>(); // assign the script
+		} else { //if (chargeLevel<=totalCharge) 
+			Vector3 size = chargedShot.transform.localScale;
+			chargedShot.transform.localScale = new Vector3(size.x*1.5f, size.y*1.5f, 1f);
+			script.damage = script.damage*2;
+		}
+		// make the charged shot stronger
+		chargeLevel++;
+	}
+	
+	void fire() {
+		if (!rf_c) {
+			numShots++;
+			if (numShots==1) {
+				timer = Time.time + waitTime; // start wait time upon first shot
+			}
+		}
+		float time = Time.time; // current time
+		if (time >= shotWaitTimer) { // if wait time expired
+			shotWaitTimer = shotWait + time;
+			Rigidbody2D bulletInstance = Instantiate (bullet, firingLocation.position, Quaternion.identity) as Rigidbody2D;
+			bulletInstance.gameObject.SetActive (true);
+			pc.anim.SetTrigger("shoot"); // change to shoot animation
+
+			if (shipMode) {
+				bulletInstance.velocity = new Vector2 (0f, bullet_speed);
+			}
+			else {
+				Vector3 scale = bulletInstance.transform.localScale;
+				if (pc.facingRight) {
+					scale.x *= 1;
+				} else {
+					scale.x *= -1;
+				}
+				
+				bulletInstance.velocity = new Vector2 (Mathf.Sign(scale.x)*bullet_speed, 0f);
+				bulletInstance.transform.localScale = scale;
+				if (rf_c&&pc.anim.GetBool("in_air")) {
+					bulletInstance = Instantiate (bullet, firingLocation2.position, Quaternion.identity) as Rigidbody2D;
+					bulletInstance.gameObject.SetActive (true);
+					scale.x *= -1;
+					bulletInstance.transform.localScale = scale;
+					bulletInstance.velocity = new Vector2 (Mathf.Sign(scale.x)*bullet_speed, 0f);
+				}
+			}
+		}
+	}
+
+	void limitFire() {
+		if (numShots >= totalShotsAllowed) {
+			firingDone = false;
+			numShots = 0;
+		}
+		
+		if (!firingDone) {
+			if (Time.time>=timer) { // if waiting time has expired
+				firingDone = true;
+			}
+		}
+	}
+}

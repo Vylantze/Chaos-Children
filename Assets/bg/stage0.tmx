@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="plumbing1" tilewidth="32" tileheight="32">
+  <image source="plumbing1.png" width="128" height="160"/>
+ </tileset>
+ <tileset firstgid="21" name="brick" tilewidth="32" tileheight="32">
+  <image source="grey.png" width="96" height="64"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2GsLwiAYBlC7X9f//7klNSqRTSLWW50DflBsiE86XUoAAADAp61G6kxrN1JnWvKIRR6xyCMWecQij1jK+e8+Mgp6ZR77S5lfyqKxLCcb6X+wP8Uij1jkEYs8YpFHLK15+O47jdb7Rq3fOj2fjfPZdzPQb+hsXDtj/6N83zil+3wsi3rfNqu0HSrPq62j3JYzqWXVW782/J90TM/zdaz0ad2vauuou/1+6Bn2w6ttuv/P90X9Uet7przf9+uoG3mGc8V7le+S8ptKzkQeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3+MM1fsCwA==
+  </data>
+ </layer>
+</map>

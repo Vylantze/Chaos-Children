@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="22" tilewidth="32" tileheight="32" backgroundcolor="#c8c880" nextobjectid="1">
+ <tileset firstgid="1" name="plumbing1" tilewidth="32" tileheight="32">
+  <image source="plumbing1.png" width="128" height="160"/>
+ </tileset>
+ <tileset firstgid="21" name="brick" tilewidth="32" tileheight="32">
+  <image source="grey.png" width="96" height="64"/>
+ </tileset>
+ <tileset firstgid="27" name="plumbing2" tilewidth="32" tileheight="32">
+  <image source="plumbing2.png" width="128" height="160"/>
+  <tile id="7">
+   <objectgroup draworder="index">
+    <object id="0" x="9" y="-3" width="17" height="37"/>
+   </objectgroup>
+  </tile>
+ </tileset>
+ <tileset firstgid="47" name="blocks" tilewidth="32" tileheight="32">
+  <image source="blocks.png" width="128" height="96"/>
+ </tileset>
+ <layer name="Tile Layer 2" width="100" height="22" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJzt10EKwkAMheE5R1FH60IXdlW197+ZgUGKMlAYQpMJ/wePoZsSeKVpU/LpJXlWTth4S+bKCSzWA+AHffhCH77Qhy/04Qt9YEu2HqCRxrM9KNxD29V6gEb04Qt9+BK1j5v1AI2i9tEr+tBxkBwlJ8n97xq2ev3WjqrX3RXRWTJJLsZzoPi+qx6p7JHRcBas/z05sUewvw9iKAjW
+  </data>
+ </layer>
+ <layer name="Tile Layer 1" width="100" height="22">
+  <data encoding="base64" compression="zlib">
+   eJztmAFugzAMRd11jAJllVptZ9n9T7ZYw5JrnJCwsCSav2QVXGo5fokb0sGzOmcfG2Y6ToNy3yoPLdevSixW/4FHSzIedWkPjxST8XPlTPHfnPWL33iU5zE6mxa/8SjPY8ta5zFDXh7zATmn5Ng6D1z/L87OzF6dvXv8IR9eT5BfmKNW99x70T371d/qiH5i2i/jUZeMR10yHnXJeNSlWB7doVmYSLHvB9pzeFbB97u4v+0jngvtoem7kLTflD6/zXW+O4q6aHVC30Pxae8W2jpCn8ZEMx9TrphYFOezEkvRFZ7P5a6J4+f109YR+jQmA+gctnojj+WbP/0yjtIcUnlc4GeeY+4ju+fjPYG/r+C474FnaR3NsOYsRRy2/tNkLLrmvDHWDcpzSOXBa8YZ8F7kO0Ppl3HTfEWWsq/xfqdx5etiEJ8+nVi+fP48RCzMqzSHPf3qryT7EGeIdYzlQXHusO5xfI3ZXj4sWZ9OXMfywO+R5QRrxjxGizy+AfHTNOo=
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="100" height="22">
+  <data encoding="base64" compression="zlib">
+   eJzt0TEKACAMBMGAWFj7/79apwwoQZh5wLFwEQAAAAAAANwyuwNIRncAyXq47eu63R0AfOUA+MgAKA==
+  </data>
+ </layer>
+</map>

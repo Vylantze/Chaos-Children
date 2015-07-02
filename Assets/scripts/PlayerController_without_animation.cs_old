@@ -1,0 +1,182 @@
+﻿/*
+ * 
+ * 
+ * Uses direct velocity manipulation
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+*
+
+using UnityEngine;
+using System.Collections;
+
+public class PlayerController_no_animation : MonoBehaviour {
+	
+	public bool jump = false;
+	public bool facingRight = true;
+	public float moveForce = 365f;
+	public float maxHoriSpeed = 10f;
+	public float maxVerticalSpeed = 20f;
+	public float jumpForce = 1000f;
+
+	private Rigidbody2D rb2d;
+	Collider2D[] colliders;
+	private bool _godown, _goright;
+	private int _up, _down, _left, _right;
+	private float xvel, yvel, acl;
+	private bool flip = true; // by default face right
+
+
+	
+	// Use this for initialization
+	void Awake () {
+		colliders = GetComponentsInChildren<Collider2D>();
+		rb2d = GetComponent<Rigidbody2D> ();
+		_up = _down = _left = _right = 0;
+		_godown = _goright = false;
+		acl = 1f;
+	}
+	// Update is called once per frame
+	void Update () {
+		keyboard ();
+		movement ();
+		Flip ();
+	}
+	
+	void Flip() {
+		if (flip!= facingRight) {
+			flip = !flip;
+			Vector3 theScale = transform.localScale;
+			theScale.x *= -1;
+			transform.localScale = theScale;
+		}
+	}
+
+	public void movement() { // can access stage directly, but will receive error if not on stage
+		int x_dir, y_dir;
+		//y_dir = up_dir + down_dir;
+		if (_goright) { // priority is right
+			x_dir = _right;
+		}
+		else {
+			x_dir = _left;
+		}
+		
+		if (_godown) {
+			y_dir = _down;
+		}
+		else {
+			y_dir = _up;
+		}
+		
+		if (x_dir == 0) { 
+			if (xvel > 0) { xvel--; } else if (xvel < 0) { xvel++; }
+			else { 
+				
+			}
+		}
+		else { 
+			if ( (xvel > 0 &&x_dir < 0)||(xvel < 0 && x_dir > 0) )  {
+				xvel = 0;
+			}
+			//xvel += x_dir * acl;
+			xvel = x_dir*maxHoriSpeed;
+		}
+		/*
+		if (y_dir == 0) { 
+			if (yvel > 0) { yvel--; } else if (yvel<0) { yvel++;}
+		}
+		else { 
+			if ( (yvel > 0 && y_dir < 0)||(yvel < 0 && y_dir > 0) )  {
+				yvel = 0;
+			}
+			yvel += y_dir * acl;
+		}*
+		
+		if (xvel > maxHoriSpeed) { xvel = (int)maxHoriSpeed; } 
+		else if (xvel < -maxHoriSpeed) { xvel = (int)-maxHoriSpeed; }
+		//if (yvel > maxVerticalSpeed) { yvel = (int)maxVerticalSpeed; } 
+		//else if (yvel < -maxVerticalSpeed) { yvel = (int)-maxVerticalSpeed; }
+		yvel = rb2d.velocity.y;
+		//if (jump && yvel == 0f) {
+		//	rb2d.AddForce (new Vector2 (0f, jumpForce));
+		if (jump) {
+			foreach(Collider2D collider in colliders) {
+				if (collider.IsTouchingLayers(LayerMask.GetMask("Ground"))&&Mathf.Abs(yvel)<=0.3f) {
+					rb2d.AddForce (new Vector2 (0f, jumpForce));
+				}
+			}
+		} else {
+		}
+		
+		jump = false;
+
+		if (xvel > 0) {
+			facingRight = true;
+		} else if (xvel < 0) {
+			facingRight = false;
+		}
+		rb2d.velocity = new Vector2(xvel * 1f, yvel);
+	}
+
+	private void keyboard() {
+		// Down inputs
+		// Vertical
+		if (Input.GetButtonDown("Up")) {
+			_up = 1;
+			_godown = false;
+		}
+		else if (Input.GetButtonDown("Down")) { 
+			_down = -1;
+			_godown = true;
+		}
+		// Horizontal
+		if (Input.GetButtonDown ("Right")) {
+			_right = 1;
+			_goright = true;
+		}
+		else if (Input.GetButtonDown ("Left")) { 
+			_left = -1;
+			_goright = false;
+		}
+		// Jump
+		if (Input.GetButtonDown("Jump")) {
+			jump = true;
+		}
+
+		// Release inputs
+		// Vertical
+		if (Input.GetButtonUp("Up")) {
+			_up = 0;
+			_godown = true;
+		}
+		else if (Input.GetButtonUp("Down")) { 
+			_down = 0;
+			_godown = false;
+		}
+		// Horizontal
+		if (Input.GetButtonUp("Right")) {
+			_right = 0;
+			_goright = false;
+		}
+		else if (Input.GetButtonUp("Left")) { 
+			_left = 0;
+			_goright = true;
+		}
+	}
+}//*/
