@@ -14,8 +14,7 @@ public class GunScript : MonoBehaviour {
 	public Transform platformLocation;
 	private Rapid rapid;
 	private Charge charge;
-	
-	public Debug debug;
+
 	public AudioClip mode_change;
 	public MasterPlayer master;
 	
@@ -40,20 +39,25 @@ public class GunScript : MonoBehaviour {
 		rf_c = master.female;
 		// true is rapid fire/female
 		// false is charged mode/male
+		activateGun ();
+	}
+
+	void activateGun() {
+		rapid.enabled = rf_c;
+		charge.enabled = !rf_c;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		// switch mdes // debug only
-		if (Input.GetButtonDown("Switch Mode")&&debug.debug) {
+		if (Input.GetButtonDown("Switch Mode")&&master.debug.debug) {
 			AudioSource.PlayClipAtPoint(mode_change, transform.position);
 			rf_c = !rf_c;
 			// true is rapid fire
 			// false is charge
-			rapid.enabled = rf_c;
-			charge.enabled = !rf_c;
+			activateGun();
 		}
-		if (Input.GetButtonDown ("SwitchScene") && debug.debug) {
+		if (Input.GetButtonDown ("SwitchScene") && master.debug.debug) {
 			//rapid = GetComponentInChildren<Rapid> ();
 			//charge = GetComponentInChildren<Charge> ();
 			if (master.shipMode) {

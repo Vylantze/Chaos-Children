@@ -17,6 +17,7 @@ TagManager:
   - ToBeDestroyed
   - MapLimit
   - EnemyBullet
+  - Assist
   layers:
   - Default
   - TransparentFX

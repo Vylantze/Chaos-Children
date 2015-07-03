@@ -10,13 +10,16 @@ public class PlatformCamera : MonoBehaviour {
 	public Vector2 minXAndY;		// The minimum x and y coordinates the camera can have.
 	public bool lockCamera = false;
 	
-	private Transform player;		// Reference to the player's transform.
-	
+	public Transform player;		// Reference to the player's transform.
+	MasterPlayer master;
+	bool shipMode;
 	
 	void Awake ()
 	{
+		master = GameObject.Find ("mainChara").GetComponent<MasterPlayer> ();
 		// Setting up the reference.
-		player = GameObject.FindGameObjectWithTag("Player").transform;
+		shipMode = master.shipMode;
+		assignTransform ();
 	}
 	
 	
@@ -32,12 +35,25 @@ public class PlatformCamera : MonoBehaviour {
 		// Returns true if the distance between the camera and the player in the y axis is greater than the y margin.
 		return Mathf.Abs(transform.position.y - player.position.y) > yMargin;
 	}
+
+	void assignTransform() {
+		if (!shipMode) {
+			player = master.GetComponentInChildren<PlayerController> ().transform;
+		} else {
+			player = master.GetComponentInChildren<ShipController> ().transform;
+		}
+	}
 	
 	
 	void FixedUpdate ()
 	{
 		if (!lockCamera) {
 			TrackPlayer ();
+		}
+
+		if (shipMode != master.shipMode) {
+			shipMode = master.shipMode;
+			assignTransform();
 		}
 	}
 	
