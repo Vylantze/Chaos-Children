@@ -199,4 +199,8 @@ public class MasterPlayer : MonoBehaviour {
 	public Vector3 platformPosition() {
 		return platformer.gameObject.transform.position;
 	}
+
+	public void setCharge(float value) {
+		anim.SetLayerWeight(1, value);
+	}
 }

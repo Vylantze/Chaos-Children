@@ -299,7 +299,10 @@ AnimatorStateTransition:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 2
+    m_ConditionEvent: in_air
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 110220848}
   m_Solo: 0
@@ -309,7 +312,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0
   m_TransitionOffset: 0
   m_ExitTime: 1
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 0
   m_InterruptionSource: 1
   m_OrderedInterruption: 1
@@ -711,6 +714,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 3
     m_ConditionEvent: speed
     m_EventTreshold: .100000001
+  - m_ConditionMode: 2
+    m_ConditionEvent: in_air
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 110262770}
   m_Solo: 0
@@ -720,7 +726,7 @@ AnimatorStateTransition:
   m_TransitionDuration: .00548672676
   m_TransitionOffset: .0575380735
   m_ExitTime: 1
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 0
   m_InterruptionSource: 1
   m_OrderedInterruption: 1
@@ -1049,10 +1055,10 @@ AnimatorStateMachine:
       first: {fileID: 0}
       second: []
     data:
-      first: {fileID: 110767668}
+      first: {fileID: 110767668, guid: 39bd06fd546a2fa409154817972fd636, type: 2}
       second: []
     data:
-      first: {fileID: 110767668, guid: 39bd06fd546a2fa409154817972fd636, type: 2}
+      first: {fileID: 110767668}
       second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -108, y: -156, z: 0}

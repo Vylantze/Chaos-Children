@@ -53,6 +53,7 @@ public class Charge : MonoBehaviour {
 
 			// if charge level already exists, make sure that the attack keeps following character
 			if (chargeLevel>0) {
+				charge_anim.SetInteger("charge_level", chargeLevel);
 				Vector3 scale = chargedShot.transform.localScale;
 				if (master.shipMode) {
 					chargedShot.transform.position = master.shipPosition();
@@ -80,9 +81,11 @@ public class Charge : MonoBehaviour {
 				chargedShot.velocity = new Vector2 (0f, gun.bullet_speed);
 			} else {
 				master.SetTrigger ("shoot");
+				charge_anim.SetBool("charge", false);
+				charge_anim.SetInteger("charge_level", 0); // reset
+				master.setCharge(0f); // reset 'charging' layer weight to 0
 				chargedShot.velocity = new Vector2 (Mathf.Sign (chargedShot.transform.localScale.x) * gun.bullet_speed, 0f);
 			}
-			charge_anim.SetBool("charge",false);
 			chargeLevel = 0;
 			chargedShot = null;
 			shotWaitTimer = shotWait + time; // reset timer for normal shots also
@@ -109,7 +112,8 @@ public class Charge : MonoBehaviour {
 		numShots = 0;
 		if (chargedShot==null) {
 			if (!master.shipMode) {
-				charge_anim.SetBool("charge",true);
+				master.setCharge(1f); // set 'charging' layer to activate
+				charge_anim.SetBool("charge", true);
 			}
 			chargedShot = Instantiate (gun.bullet, gun.firingLocation.position, Quaternion.identity) as Rigidbody2D;
 			chargedShot.gameObject.SetActive(true);

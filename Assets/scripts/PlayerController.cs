@@ -38,6 +38,7 @@ public class PlayerController : MasterPlayer {
 	public MasterPlayer master;
 	private Rigidbody2D rb2d;
 	Collider2D[] colliders;
+	private bool charge = false;
 
 	// Use this for initialization
 	void Start () {
@@ -75,6 +76,7 @@ public class PlayerController : MasterPlayer {
 
 		//if (jump && yvel == 0f) {
 		//	rb2d.AddForce (new Vector2 (0f, jumpForce));
+		/*// Old code
 		if (jump&&!master.shipMode) {
 			foreach(Collider2D collider in colliders) {
 				if (collider.IsTouchingLayers(LayerMask.GetMask("Ground"))&&Mathf.Abs(yvel)<=0.3f) {
@@ -84,6 +86,21 @@ public class PlayerController : MasterPlayer {
 				}
 			}
 		} else {
+		}//*/
+		
+		anim.SetBool ("in_air", true);
+		master.in_air = true;
+		foreach(Collider2D collider in colliders) {
+			if (collider.IsTouchingLayers(LayerMask.GetMask("Ground"))&&Mathf.Abs(yvel)<=0.3f) {
+				anim.SetBool ("in_air", false);
+				master.in_air = false;
+				break;
+			}
+		}
+
+		if (jump && !master.in_air) {
+			rb2d.AddForce (new Vector2 (0f, jumpForce));
+			master.SetTrigger("jump");
 		}
 		
 		jump = false;
@@ -93,16 +110,9 @@ public class PlayerController : MasterPlayer {
 		} else if (xvel < 0) {
 			facingRight = false;
 		}
-
-		if (Mathf.Abs (yvel) > 1f) {
-			anim.SetBool ("in_air", true);
-			master.in_air = true;
-		} else {
-			anim.SetBool ("in_air", false);
-			master.in_air = false;
-		}
 		// if statement is true, in air. if false, not
 		rb2d.velocity = new Vector2(xvel * 1f, yvel);
-		anim.SetFloat("speed", Mathf.Abs(xvel));
+
+		anim.SetFloat ("speed", Mathf.Abs (xvel));
 	}
 }
