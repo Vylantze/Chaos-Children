@@ -145,6 +145,7 @@ GameObject:
   - 114: {fileID: 11492448}
   - 114: {fileID: 11430480}
   - 114: {fileID: 11462420}
+  - 114: {fileID: 11420560}
   m_Layer: 9
   m_Name: mainChara
   m_TagString: Player
@@ -183,7 +184,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -61.9099998, y: -23.3199997, z: 0}
+  m_LocalPosition: {x: -57.9949989, y: -32.9910011, z: 0}
   m_LocalScale: {x: .894610226, y: .905934155, z: .905934155}
   m_Children:
   - {fileID: 430628}
@@ -377,6 +378,21 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11420560
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 195090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949536032ca11cb44abd032a68bdf953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentColour: 0
+  master: {fileID: 0}
+  isObject: 0
+  activePower: []
 --- !u!114 &11427678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -395,6 +411,8 @@ MonoBehaviour:
   dead: 0
   debug: {fileID: 0}
   acl: 3
+  elements: 01000000
+  switch_mode: {fileID: 0}
   jump: 0
   facingRight: 1
   moveForce: 365
@@ -439,6 +457,8 @@ MonoBehaviour:
   dead: 0
   debug: {fileID: 0}
   acl: 3
+  elements: 01000000
+  switch_mode: {fileID: 8300000, guid: dbf9f56ddad673f418b2167d713552cb, type: 3}
 --- !u!114 &11462420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -451,6 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotWait: .25
+  angleInDegreesMax: 10
 --- !u!114 &11482572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -469,6 +490,8 @@ MonoBehaviour:
   dead: 0
   debug: {fileID: 0}
   acl: 5
+  elements: 01000000
+  switch_mode: {fileID: 0}
   max: 10
   master: {fileID: 11450608}
 --- !u!114 &11492448
@@ -488,7 +511,9 @@ MonoBehaviour:
   firingLocation2: {fileID: 409388}
   shipLocation: {fileID: 455530}
   platformLocation: {fileID: 483182}
-  mode_change: {fileID: 8300000, guid: c11a27f21bb96aa409f3c626f89e3b22, type: 3}
+  chara_change: {fileID: 8300000, guid: c11a27f21bb96aa409f3c626f89e3b22, type: 3}
+  normalShot: {fileID: 8300000, guid: 70b708e4c32e252488be20c9b3d275d8, type: 3}
+  chargedShot: {fileID: 8300000, guid: e3a648d16554c8a47ad3dd8eba3266f6, type: 3}
   master: {fileID: 11450608}
   rf_c: 0
 --- !u!212 &21206226

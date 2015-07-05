@@ -87,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 142130}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 70.3199997, y: -3.1500001, z: -10}
+  m_LocalPosition: {x: -16.9599991, y: 5.69999981, z: -10}
   m_LocalScale: {x: .679401219, y: .688000858, z: .688000858}
   m_Children:
   - {fileID: 420640}
@@ -247,8 +247,8 @@ MonoBehaviour:
   yMargin: 2
   xSmooth: 4
   ySmooth: 4
-  maxXAndY: {x: 35, y: -25}
-  minXAndY: {x: -60, y: -36.5}
+  maxXAndY: {x: 50, y: -25}
+  minXAndY: {x: -51, y: -36.5}
   lockCamera: 0
   player: {fileID: 0}
 --- !u!1001 &100100000

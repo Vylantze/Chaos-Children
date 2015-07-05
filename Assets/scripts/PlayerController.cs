@@ -38,7 +38,6 @@ public class PlayerController : MasterPlayer {
 	public MasterPlayer master;
 	private Rigidbody2D rb2d;
 	Collider2D[] colliders;
-	private bool charge = false;
 
 	// Use this for initialization
 	void Start () {

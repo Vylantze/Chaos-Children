@@ -12,6 +12,7 @@ GameObject:
   - 61: {fileID: 6183150}
   - 95: {fileID: 9536862}
   - 114: {fileID: 11459234}
+  - 114: {fileID: 11414484}
   m_Layer: 12
   m_Name: flame_wall
   m_TagString: Assist
@@ -26,8 +27,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 105948}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 14.5940742, z: 1}
+  m_LocalPosition: {x: -.5, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -53,7 +54,7 @@ Animator:
   m_GameObject: {fileID: 105948}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 93bf70aeb10073441aad84067152a9af, type: 2}
+  m_Controller: {fileID: 9100000, guid: f42c67d7771e7594eaa9eae4a159d78e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -61,6 +62,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11414484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949536032ca11cb44abd032a68bdf953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentColour: 0
 --- !u!114 &11459234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 800
+  type: 1
 --- !u!212 &21221686
 SpriteRenderer:
   m_ObjectHideFlags: 1

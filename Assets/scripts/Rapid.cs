@@ -6,9 +6,10 @@ public class Rapid : MonoBehaviour {
 	MasterPlayer master;
 
 	// time between each individual shot
-	public float shotWait = 0.40f;
+	public float shotWait = 0.25f;
 	private float shotWaitTimer = 0f;
-
+	public int angleInDegreesMax = 10; // in degrees
+	private int currentAngle = 0;
 	
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,10 @@ public class Rapid : MonoBehaviour {
 		if (Input.GetButton ("FireBullet")) {
 			fire ();
 		}
+
+		if (Input.GetButtonUp ("FireBullet")) {
+			currentAngle = 0;
+		}
 	}
 	
 	void fire() {
@@ -32,6 +37,7 @@ public class Rapid : MonoBehaviour {
 			Rigidbody2D bulletInstance = Instantiate (gun.bullet, gun.firingLocation.position, Quaternion.identity) as Rigidbody2D;
 			bulletInstance.gameObject.SetActive (true);
 			
+			AudioSource.PlayClipAtPoint(gun.normalShot,transform.position);
 			if (master.shipMode) {
 				bulletInstance.rotation = 90; // 90 degrees means facing north
 				bulletInstance.velocity = new Vector2 (0f, gun.bullet_speed);
@@ -46,7 +52,18 @@ public class Rapid : MonoBehaviour {
 					scale.x *= -1;
 				}
 				bulletInstance.transform.localScale = scale;
-				bulletInstance.velocity = new Vector2 (Mathf.Sign(scale.x)*gun.bullet_speed, 0f);
+
+				// give some random angles for rapidfire				
+				bulletInstance.rotation = Random.Range(-currentAngle, currentAngle)*1f;
+				if (currentAngle<angleInDegreesMax) { currentAngle++; } // increment
+				float angle = bulletInstance.rotation*Mathf.PI/180;
+				bulletInstance.velocity = new Vector2 (
+					gun.bullet_speed*Mathf.Cos(angle)*Mathf.Sign(scale.x),
+					gun.bullet_speed*Mathf.Sin(angle));
+
+
+				//bulletInstance.velocity = new Vector2 (Mathf.Sign(scale.x)*gun.bullet_speed, 0f);
+
 
 				// if it is the girl, she gets double shots in the air
 				if (master.in_air&&master.female) { 

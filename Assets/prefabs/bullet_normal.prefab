@@ -93,8 +93,7 @@ MonoBehaviour:
   damage: 1
   rb2d: {fileID: 0}
   charged: 0
-  normalShot: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
-  chargedShot: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
+  deflect: {fileID: 8300000, guid: 3cc3dd58ec5604f488f3836d2fc3fc9a, type: 3}
 --- !u!212 &21273444
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -132,6 +131,18 @@ Prefab:
       propertyPath: m_SortingLayerID
       value: 1024582385
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: normalShot
+      value: 
+      objectReference: {fileID: 8300000, guid: 70b708e4c32e252488be20c9b3d275d8, type: 3}
+    - target: {fileID: 0}
+      propertyPath: chargedShot
+      value: 
+      objectReference: {fileID: 8300000, guid: e3a648d16554c8a47ad3dd8eba3266f6, type: 3}
+    - target: {fileID: 0}
+      propertyPath: deflect
+      value: 
+      objectReference: {fileID: 8300000, guid: 3cc3dd58ec5604f488f3836d2fc3fc9a, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113114}

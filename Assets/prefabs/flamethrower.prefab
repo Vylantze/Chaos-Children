@@ -12,6 +12,7 @@ GameObject:
   - 61: {fileID: 6160600}
   - 95: {fileID: 9547188}
   - 114: {fileID: 11427090}
+  - 114: {fileID: 11412424}
   m_Layer: 12
   m_Name: flamethrower
   m_TagString: Assist
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 176422}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 48.5, y: -5.46000004, z: 0}
+  m_LocalPosition: {x: 48.5, y: -5.45999908, z: 0}
   m_LocalScale: {x: 1, y: .150000006, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -61,6 +62,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11412424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949536032ca11cb44abd032a68bdf953, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentColour: 0
 --- !u!114 &11427090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   force: 800
+  type: 1
 --- !u!212 &21205172
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -15,7 +15,11 @@ public class GunScript : MonoBehaviour {
 	private Rapid rapid;
 	private Charge charge;
 
-	public AudioClip mode_change;
+	// sound
+	public AudioClip chara_change;
+	public AudioClip normalShot;
+	public AudioClip chargedShot;
+
 	public MasterPlayer master;
 	
 	// rapid fire mode
@@ -51,7 +55,7 @@ public class GunScript : MonoBehaviour {
 	void Update () {
 		// switch mdes // debug only
 		if (Input.GetButtonDown("Switch Mode")&&master.debug.debug) {
-			AudioSource.PlayClipAtPoint(mode_change, transform.position);
+			AudioSource.PlayClipAtPoint(chara_change, transform.position);
 			rf_c = !rf_c;
 			// true is rapid fire
 			// false is charge

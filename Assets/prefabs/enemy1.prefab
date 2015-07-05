@@ -33,6 +33,7 @@ Transform:
   m_RootOrder: 0
 --- !u!50 &5059222
 Rigidbody2D:
+  serializedVersion: 2
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -41,11 +42,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
-  m_FixedAngle: 1
   m_IsKinematic: 1
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &6118690
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -71,13 +72,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 1
-  rb2d: {fileID: 0}
   dead: 0
   deathForceMax: 250
   deathForceMin: 50
   master: 0
   onlyChargeShots: 0
-  audio: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  damage_dealt: 1
+  explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
+  hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
 --- !u!212 &21253222
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -110,7 +112,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: explosion
+      value: 
+      objectReference: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
+    - target: {fileID: 0}
+      propertyPath: hit
+      value: 
+      objectReference: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 141900}

@@ -4,11 +4,10 @@ using System.Collections;
 public class BulletScript : MonoBehaviour {
 	//PlayerController pc;
 	public float bullet_speed = 15f;
-	public float damage = 0.17f; // damage dealt
+	public float damage = 1f; // damage dealt
 	public Rigidbody2D rb2d;
 	public bool charged = false;
-	public AudioClip normalShot;
-	public AudioClip chargedShot;
+	public AudioClip deflect;
 	// Use this for initialization
 	void Awake () {
 		rb2d = GetComponent<Rigidbody2D> ();

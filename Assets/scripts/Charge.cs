@@ -13,7 +13,7 @@ public class Charge : MonoBehaviour {
 	public float waitTime = 3f;
 	private float timer = 0f;
 	// time between each individual shot
-	public float shotWait = 0.25f;
+	public float shotWait = 0.4f;
 	private float shotWaitTimer = 0f;
 	
 	// charge mode
@@ -73,9 +73,13 @@ public class Charge : MonoBehaviour {
 		// if charged shot is fired/released
 		if (Input.GetButtonUp ("FireBullet") && chargedShot != null) { // and chargedShot exists
 			chargedCollider.enabled = true;
+
 			if (chargeLevel>1) {
 				script.charged = true;
+				AudioSource.PlayClipAtPoint(gun.chargedShot,transform.position);
 			}
+			else {AudioSource.PlayClipAtPoint(gun.normalShot,transform.position); }
+
 			chargedShot.GetComponent<SpriteRenderer>().enabled = true;
 			if (master.shipMode) { // if it is ship mode, just fire upwards
 				chargedShot.velocity = new Vector2 (0f, gun.bullet_speed);
@@ -146,6 +150,8 @@ public class Charge : MonoBehaviour {
 			// create an instance of the bullet
 			Rigidbody2D bulletInstance = Instantiate (gun.bullet, gun.firingLocation.position, Quaternion.identity) as Rigidbody2D;
 			bulletInstance.gameObject.SetActive (true);
+			// play fire effect
+			AudioSource.PlayClipAtPoint(gun.normalShot,transform.position);
 
 			if (master.shipMode) { // if ship mode, shoot upwards
 				bulletInstance.rotation = 90; // 90 degrees means facing north

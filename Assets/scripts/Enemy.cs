@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour {
 	public bool master = false; // is it a master enemy
 	public bool onlyChargeShots = false;
 	public float damage_dealt = 1f;
+	public AudioClip explosion;
+	public AudioClip hit;
 
 	// Use this for initialization
 	void Start () {
@@ -93,22 +95,25 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.CompareTag ("Bullet")&&transform.tag!="ToBeDestroyed") {
 			BulletScript bullet = collider.GetComponent<BulletScript>();
-			if (!bullet.charged) { // if it is not a charged bullet
-				AudioSource.PlayClipAtPoint(bullet.normalShot, transform.position);
-				Destroy(bullet.gameObject);
-			}
-			else {
-				AudioSource.PlayClipAtPoint(bullet.chargedShot, transform.position);
-			}
 
-			if (!onlyChargeShots|| // means if normal shots can deal damage also
-			    (bullet.charged&&onlyChargeShots)) {
-				HP -= bullet.damage;
+			if (onlyChargeShots&&!bullet.charged) { // if shot invalid
+				AudioSource.PlayClipAtPoint(bullet.deflect, transform.position);
+				Destroy(bullet.gameObject); // destroy
 			}
-		}
+			else { // else if not invalid
+				HP -= bullet.damage; // deal damage
+				if (bullet.charged) { // if it is a charged bullet
+					AudioSource.PlayClipAtPoint(explosion, transform.position);
+				}
+				else {
+					AudioSource.PlayClipAtPoint(hit, transform.position);
+					Destroy(bullet.gameObject); // only destroy if it is a normal bullet
+				}
 
-		if (HP <= 0f) {
-			dead = true;
+				if (HP <= 0f) {
+					dead = true;
+				}
+			}
 		}
 	}
 

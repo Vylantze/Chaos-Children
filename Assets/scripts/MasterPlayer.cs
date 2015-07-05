@@ -23,6 +23,16 @@ public class MasterPlayer : MonoBehaviour {
 	protected float xvel, yvel;
 	public float acl = 3f;
 
+	// colour change
+	public bool[] elements = {true, false, false, false}; // elements available
+	string[] commands = {"None", "FireMode", "ThunderMode", "IceMode"};
+	// 0 = NONE = true;
+	// others are in order
+
+	//sound
+	public AudioClip switch_mode;
+
+
 	// Use this for initialization
 	void Awake () {
 		//DontDestroyOnLoad (transform.gameObject);
@@ -58,12 +68,26 @@ public class MasterPlayer : MonoBehaviour {
 			// false is male
 			loadAnimator ();
 		}
+		if (!dead) {
+			colourChange ();
+		}
 		/*
 		if (Input.GetButtonDown("SwitchScene")&&debug.debug) {
 			shipMode = !shipMode;
 			ship.gameObject.SetActive(shipMode);
 			platformer.gameObject.SetActive(!shipMode);
 		}*/
+	}
+
+	void colourChange() {
+		for (int i=1; i<4; i++) { // start from 1, aka fire
+			if (Input.GetButtonDown (commands[i]) && // if correct command
+			    elements [i]) { // and element is now assessible
+				AudioSource.PlayClipAtPoint(switch_mode, transform.position);
+				GetComponent<ModeChange> ().currentColour = i;
+				break; // once colour changed, can break loop
+			}
+		}
 	}
 
 	void Restart() {
@@ -162,25 +186,27 @@ public class MasterPlayer : MonoBehaviour {
 				}
 				yvel += y_dir * acl;
 			}
-			
+
 		}//*/
 	}
 	
-	void Death(){
-		dead = true;
-		if (!shipMode) {
-			PlatformCamera camera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<PlatformCamera> ();
-			camera.lockCamera = true;
-			anim.SetBool ("dead",true);
+	public void Death(){
+		if (!dead) {
+			dead = true;
+			if (!shipMode) {
+				PlatformCamera camera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<PlatformCamera> ();
+				camera.lockCamera = true;
+				anim.SetBool ("dead", true);
+			}
+			Collider2D[] colliders = transform.GetComponentsInChildren<Collider2D> ();
+			foreach (Collider2D collider in colliders) {
+				collider.isTrigger = true;
+			}
+			Rigidbody2D rb2d = transform.GetComponentInChildren<Rigidbody2D> ();
+			rb2d.AddForce (new Vector2 (0f, 500));
+			rb2d.velocity = new Vector2 (0f, 0f);
+			rb2d.gravityScale = 1f;
 		}
-		Collider2D[] colliders = transform.GetComponentsInChildren<Collider2D>();
-		foreach (Collider2D collider in colliders) {
-			collider.isTrigger = true;
-		}
-		Rigidbody2D rb2d = transform.GetComponentInChildren<Rigidbody2D> ();
-		rb2d.AddForce (new Vector2 (0f, 500));
-		rb2d.velocity = new Vector2 (0f, 0f);
-		rb2d.gravityScale = 1f;
 	}
 
 	void OnTriggerEnter2D(Collider2D collider) {
