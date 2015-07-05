@@ -14,7 +14,9 @@ public class MapLimit : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D(Collider2D collider) {
-		if (collider.CompareTag("Player"))
-			Application.LoadLevel(Application.loadedLevel);
+		if (collider.CompareTag ("Player")) {
+			//GetComponentInParent<Stage0>().Restart();
+			Application.LoadLevel (Application.loadedLevel);
+		}
 	}
 }

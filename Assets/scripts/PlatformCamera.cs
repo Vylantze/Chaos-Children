@@ -16,7 +16,7 @@ public class PlatformCamera : MonoBehaviour {
 	
 	void Awake ()
 	{
-		master = GameObject.Find ("mainChara").GetComponent<MasterPlayer> ();
+		master = GameObject.FindGameObjectWithTag ("Player").GetComponent<MasterPlayer> ();
 		// Setting up the reference.
 		shipMode = master.shipMode;
 		assignTransform ();

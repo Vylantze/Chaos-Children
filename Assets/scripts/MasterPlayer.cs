@@ -25,6 +25,7 @@ public class MasterPlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+		//DontDestroyOnLoad (transform.gameObject);
 		_up = _down = _left = _right = 0;
 		_godown = _goright = false;
 		if (shipMode) {
@@ -57,15 +58,17 @@ public class MasterPlayer : MonoBehaviour {
 			// false is male
 			loadAnimator ();
 		}
+		/*
 		if (Input.GetButtonDown("SwitchScene")&&debug.debug) {
 			shipMode = !shipMode;
 			ship.gameObject.SetActive(shipMode);
 			platformer.gameObject.SetActive(!shipMode);
-		}
+		}*/
 	}
 
 	void Restart() {
-		Application.LoadLevel(Application.loadedLevel);
+		dead = false;
+		Application.LoadLevel ("tutorial");
 	}
 
 	public void SetTrigger(string value) {

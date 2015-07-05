@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Flamethrower.cs" />
+     <Compile Include="Assets\Stage0.cs" />
      <Compile Include="Assets\scripts\BulletDestroy.cs" />
      <Compile Include="Assets\scripts\BulletScript.cs" />
      <Compile Include="Assets\scripts\Charge.cs" />
