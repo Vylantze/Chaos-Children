@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ShipController : MasterPlayer {
+public class ShipController : PlayerController {
 
 	public float max = 20f;
 
@@ -9,11 +9,13 @@ public class ShipController : MasterPlayer {
 
 	private Rigidbody2D rb2d;
 	private Sprite sprite;
+	Collider2D[] colliders;
+
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
-		master = GetComponentInParent<MasterPlayer> ();
-		master.shipMode = true;
+		master = MasterPlayer.mainPlayer;
+		colliders = GetComponentsInChildren<Collider2D>();
 	}
 	
 	// Update is called once per frame
@@ -38,5 +40,20 @@ public class ShipController : MasterPlayer {
 
 		// if statement is true, in air. if false, not
 		rb2d.velocity = new Vector2(xvel * 1f, yvel* 1f);
+	}
+
+	public void colliderEnabled(bool value) {
+		foreach (Collider2D collider in colliders) {
+			collider.enabled = value;
+		}
+	}
+
+	
+	public void reset() {
+		rb2d.gravityScale = 0f;
+		rb2d.velocity = Vector2.zero;
+		xvel = yvel = 0f;
+		_up = _down = _left = _right = 0;
+		_godown = _goright = false;
 	}
 }

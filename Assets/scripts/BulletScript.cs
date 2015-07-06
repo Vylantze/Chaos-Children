@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class BulletScript : MonoBehaviour {
-	//PlayerController pc;
+	//PlatformController pc;
 	public float bullet_speed = 15f;
 	public float damage = 1f; // damage dealt
 	public Rigidbody2D rb2d;
@@ -11,7 +11,7 @@ public class BulletScript : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		rb2d = GetComponent<Rigidbody2D> ();
-		//pc = GetComponentInParent<PlayerController> ();
+		//pc = GetComponentInParent<PlatformController> ();
 	}
 	
 	// Update is called once per frame
@@ -33,5 +33,5 @@ public class BulletScript : MonoBehaviour {
 		} else {
 			rb2d.velocity = new Vector2 (-bullet_speed, 0f);
 		}
-	}*/
+	}//*/
 }

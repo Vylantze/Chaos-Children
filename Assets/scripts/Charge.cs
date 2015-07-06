@@ -29,7 +29,7 @@ public class Charge : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gun = GetComponentInParent<GunScript> ();
-		master = gun.master;
+		master = MasterPlayer.mainPlayer;
 	}
 	
 	// Update is called once per frame

@@ -1,49 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MasterPlayer : MonoBehaviour {
-	public bool shipMode = false;
-	public bool female = true;
-	
-	protected Animator anim;// Reference to the player's animator component.
-	private PlayerController platformer;
-	private ShipController ship;
+public class MasterPlayer : PlayerController {
+	// singleton design pattern
+	public static MasterPlayer mainPlayer = null;
+
+	public PlatformController platformer;
+	public ShipController ship;
 	public bool flip = true; // true = faceright, false = faceleft
 	public bool in_air = false;
 
 	// health
 	public bool dead = false;
-	public Debug debug;
-
-	// keyboard
-	protected bool _godown, _goright;
-	protected int _up, _down, _left, _right;
-
-	//movement
-	protected float xvel, yvel;
-	public float acl = 3f;
-
-	// colour change
-	public bool[] elements = {true, false, false, false}; // elements available
-	string[] commands = {"None", "FireMode", "ThunderMode", "IceMode"};
-	// 0 = NONE = true;
-	// others are in order
 
 	//sound
 	public AudioClip switch_mode;
 
-
 	// Use this for initialization
-	void Awake () {
-		//DontDestroyOnLoad (transform.gameObject);
-		_up = _down = _left = _right = 0;
-		_godown = _goright = false;
-		if (shipMode) {
-			ship = GetComponentInChildren<ShipController> ();
-		} else {
-			platformer = GetComponentInChildren<PlayerController> ();
-			loadAnimator ();
+	void Awake() {
+		if (mainPlayer == null) {
+			DontDestroyOnLoad (gameObject);
+			mainPlayer = this;
+		} else if (mainPlayer!=this) {
+			Destroy (gameObject);
 		}
+	}
+
+	void Start () {
+		ship = GetComponentInChildren<ShipController> ();
+		platformer = GetComponentInChildren<PlatformController> ();
+		switchMode (shipMode);
+	}
+
+	void switchMode(bool isShipOn) {
+		triggerPlatform(!isShipOn);
+		triggerShip (isShipOn);
 	}
 
 	void loadAnimator() {
@@ -52,17 +43,28 @@ public class MasterPlayer : MonoBehaviour {
 		platformer.male_chara.GetComponent<SpriteRenderer>().enabled= !female;
 		if (female) {
 			anim = platformer.female_chara.GetComponent<Animator>(); // load female animator
-			platformer.female_chara.GetComponent<SpriteRenderer>().enabled=true;
-			platformer.male_chara.GetComponent<SpriteRenderer>().enabled=false;
 		} else { // else if male
 			anim = platformer.male_chara.GetComponent<Animator>();; // load male animator
 		}
-		platformer.anim = anim;
+		platformer.setAnimator(anim);
+	}
+
+	
+	void triggerPlatform(bool activated) {
+		//platformer.colliderEnabled(activated); // enable/disable collider
+		loadAnimator ();
+		platformer.enabled = activated; // disable the controller
+	}
+
+	void triggerShip(bool activated) {
+		ship.colliderEnabled(activated); // enable/disable collider
+		ship.GetComponentInChildren<SpriteRenderer>().enabled = activated;
+		ship.enabled = activated;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown("Switch Mode")&&debug.debug) {
+		if (Input.GetButtonDown("Switch Mode")&&Debug.debug) {
 			female = !female;
 			// true is female
 			// false is male
@@ -90,106 +92,40 @@ public class MasterPlayer : MonoBehaviour {
 		}
 	}
 
-	void Restart() {
-		dead = false;
-		Application.LoadLevel ("tutorial");
+	public void Restart() {
+		Reanimate ();
+		loadFromFile ();
+		PlatformCamera camera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<PlatformCamera> ();
+		camera.lockCamera = false;
+		//camera.transform.position = transform.position;
+		if (shipMode) {
+			ship.gameObject.transform.localPosition = Vector3.zero;
+		} else {
+			platformer.gameObject.transform.localPosition = Vector3.zero;
+		}
 	}
 
 	public void SetTrigger(string value) {
 		anim.SetTrigger (value);
 	}
 
-	protected void keyboard() {
-		// Down inputs
-		// Vertical
-		if (Input.GetButtonDown("Up")) {
-			_up = 1;
-			_godown = false;
+	void Reanimate() {
+		dead = false;
+		Collider2D[] colliders = transform.GetComponentsInChildren<Collider2D> ();
+		foreach (Collider2D collider in colliders) {
+			collider.isTrigger = false;
 		}
-		else if (Input.GetButtonDown("Down")) { 
-			_down = -1;
-			_godown = true;
-		}
-		// Horizontal
-		if (Input.GetButtonDown ("Right")) {
-			_right = 1;
-			_goright = true;
-		}
-		else if (Input.GetButtonDown ("Left")) { 
-			_left = -1;
-			_goright = false;
-		}
-		
-		// Release inputs
-		// Vertical
-		if (Input.GetButtonUp("Up")) {
-			_up = 0;
-			_godown = true;
-		}
-		else if (Input.GetButtonUp("Down")) { 
-			_down = 0;
-			_godown = false;
-		}
-		// Horizontal
-		if (Input.GetButtonUp("Right")) {
-			_right = 0;
-			_goright = false;
-		}
-		else if (Input.GetButtonUp("Left")) { 
-			_left = 0;
-			_goright = true;
+		if (!shipMode) {
+			platformer.enabled = true;
+			anim.SetBool ("dead", false);
+			platformer.reset();
+		} else {
+			ship.enabled = true; 
+			// and reset the gravity for rb2d
+			ship.reset();
 		}
 	}
 
-	protected void movement(bool _shipMode) {
-		int x_dir, y_dir;
-		//y_dir = up_dir + down_dir;
-		if (_goright) { // priority is right
-			x_dir = _right;
-		}
-		else {
-			x_dir = _left;
-		}
-		
-		if (_godown) {
-			y_dir = _down;
-		}
-		else {
-			y_dir = _up;
-		}
-
-		// X VELOCITY
-		if (x_dir == 0) { 
-			if (xvel > 0) { xvel--; } else if (xvel < 0) { xvel++; }
-			else { 
-				
-			}
-		}
-		else { 
-			if ( (xvel > 0 &&x_dir < 0)||(xvel < 0 && x_dir > 0) )  {
-				xvel = 0;
-			}
-			xvel += x_dir * acl;
-			//xvel = x_dir*maxHoriSpeed;
-		}
-		// Y VELOCITY
-		if (shipMode) {
-			if (y_dir == 0) { 
-				if (yvel > 0) {
-					yvel--;
-				} else if (yvel < 0) {
-					yvel++;
-				}
-			} else { 
-				if ((yvel > 0 && y_dir < 0) || (yvel < 0 && y_dir > 0)) {
-					yvel = 0;
-				}
-				yvel += y_dir * acl;
-			}
-
-		}//*/
-	}
-	
 	public void Death(){
 		if (!dead) {
 			dead = true;
@@ -203,8 +139,13 @@ public class MasterPlayer : MonoBehaviour {
 				collider.isTrigger = true;
 			}
 			Rigidbody2D rb2d = transform.GetComponentInChildren<Rigidbody2D> ();
+			if (!shipMode) {
+				platformer.enabled = false;
+			} else {
+				ship.enabled = false;
+			}
+			rb2d.velocity = Vector2.zero;
 			rb2d.AddForce (new Vector2 (0f, 500));
-			rb2d.velocity = new Vector2 (0f, 0f);
 			rb2d.gravityScale = 1f;
 		}
 	}
@@ -212,12 +153,6 @@ public class MasterPlayer : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.CompareTag ("EnemyBullet")&&!dead) {
 			Death ();
-		}
-	}
-
-	void OnTriggerExit2D(Collider2D collider) {
-		if (dead&&collider.CompareTag ("MapLimit")) {
-			Restart ();
 		}
 	}
 
@@ -231,5 +166,13 @@ public class MasterPlayer : MonoBehaviour {
 
 	public void setCharge(float value) {
 		anim.SetLayerWeight(1, value);
+	}
+
+	public void save() {
+		saveToFile ();
+	}
+
+	public void save(Vector3 position) {
+		saveToFile (position.x, position.y);
 	}
 }

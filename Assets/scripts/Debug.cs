@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Debug : MonoBehaviour {
-	public bool debug = true;
+	public static bool debug = true;
 	// Use this for initialization
 	void Start () {
 	

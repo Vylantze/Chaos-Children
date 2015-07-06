@@ -1,117 +1,202 @@
-﻿/*
- * 
- * 
- * Uses direct velocity manipulation
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
-*/
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
-public class PlayerController : MasterPlayer {
-	public bool jump = false;
-	public bool facingRight = true;
-	public float moveForce = 365f;
-	public float maxHoriSpeed = 10f;
-	public float maxVerticalSpeed = 20f;
-	public float jumpForce = 1000f;
-	public GameObject female_chara;
-	public GameObject male_chara;
+public class PlayerController : MonoBehaviour {
+	// keyboard
+	protected bool _godown, _goright;
+	protected int _up, _down, _left, _right;
+	
+	//movement
+	protected float xvel, yvel;
+	public float acl = 3f;
+	protected Animator anim;// Reference to the player's animator component.
 
-	public MasterPlayer master;
-	private Rigidbody2D rb2d;
-	Collider2D[] colliders;
+	// data to save
+	public bool shipMode = false;
+	public bool female = true;
+	// colour change
+	public bool[] elements = {true, false, false, false}; // elements available
+	public string[] commands = {"None", "FireMode", "ThunderMode", "IceMode"};
+	// 0 = NONE = true;
+	// others are in order
+
+	// Stage stuff
+	public string stage_name = "";
+	public bool loadedFromFile = false;
+	protected Vector3 loadedPosition;
 
 	// Use this for initialization
 	void Start () {
-		colliders = GetComponentsInChildren<Collider2D>();
-		rb2d = GetComponentInParent<Rigidbody2D> ();
+		_up = _down = _left = _right = 0;
+		_godown = _goright = false;
 	}
+	
 	// Update is called once per frame
 	void Update () {
-		if (!master.dead) {
-			// Jump
-			keyboard();
-			if (Input.GetButtonDown("Jump")) {
-				jump = true;
+	
+	}
+
+	protected void keyboard() {
+		// Down inputs
+		// Vertical
+		if (Input.GetButtonDown("Up")) {
+			_up = 1;
+			_godown = false;
+		}
+		else if (Input.GetButtonDown("Down")) { 
+			_down = -1;
+			_godown = true;
+		}
+		// Horizontal
+		if (Input.GetButtonDown ("Right")) {
+			_right = 1;
+			_goright = true;
+		}
+		else if (Input.GetButtonDown ("Left")) { 
+			_left = -1;
+			_goright = false;
+		}
+		
+		// Release inputs
+		// Vertical
+		if (Input.GetButtonUp("Up")) {
+			_up = 0;
+			_godown = true;
+		}
+		else if (Input.GetButtonUp("Down")) { 
+			_down = 0;
+			_godown = false;
+		}
+		// Horizontal
+		if (Input.GetButtonUp("Right")) {
+			_right = 0;
+			_goright = false;
+		}
+		else if (Input.GetButtonUp("Left")) { 
+			_left = 0;
+			_goright = true;
+		}
+	}
+	
+	protected void movement(bool _shipMode) {
+		int x_dir, y_dir;
+		//y_dir = up_dir + down_dir;
+		if (_goright) { // priority is right
+			x_dir = _right;
+		}
+		else {
+			x_dir = _left;
+		}
+		
+		if (_godown) {
+			y_dir = _down;
+		}
+		else {
+			y_dir = _up;
+		}
+		
+		// X VELOCITY
+		if (x_dir == 0) { 
+			if (xvel > 0) { xvel--; } else if (xvel < 0) { xvel++; }
+			else { 
+				
 			}
-			movement (master.shipMode);
-			movementPlatform ();
-			Flip ();
 		}
-	}
-
-	void Flip() {
-		if (master.flip!= facingRight) {
-			master.flip = facingRight;
-			Vector3 theScale = transform.localScale;
-			theScale.x *= -1;
-			transform.localScale = theScale;
+		else { 
+			if ( (xvel > 0 &&x_dir < 0)||(xvel < 0 && x_dir > 0) )  {
+				xvel = 0;
+			}
+			xvel += x_dir * acl;
+			//xvel = x_dir*maxHoriSpeed;
 		}
-	}
-
-	public void movementPlatform() { // can access stage directly, but will receive error if not on stage
-		// put limiters on speed here
-		if (xvel > maxHoriSpeed) { xvel = (int)maxHoriSpeed; } 
-		else if (xvel < -maxHoriSpeed) { xvel = (int)-maxHoriSpeed; }
-		yvel = rb2d.velocity.y;
-
-		//if (jump && yvel == 0f) {
-		//	rb2d.AddForce (new Vector2 (0f, jumpForce));
-		/*// Old code
-		if (jump&&!master.shipMode) {
-			foreach(Collider2D collider in colliders) {
-				if (collider.IsTouchingLayers(LayerMask.GetMask("Ground"))&&Mathf.Abs(yvel)<=0.3f) {
-					rb2d.AddForce (new Vector2 (0f, jumpForce));
-					master.SetTrigger("jump");
-					break;
+		// Y VELOCITY
+		//if (shipMode) {
+			if (y_dir == 0) { 
+				if (yvel > 0) {
+					yvel--;
+				} else if (yvel < 0) {
+					yvel++;
 				}
+			} else { 
+				if ((yvel > 0 && y_dir < 0) || (yvel < 0 && y_dir > 0)) {
+					yvel = 0;
+				}
+				yvel += y_dir * acl;
 			}
-		} else {
-		}//*/
-		
-		anim.SetBool ("in_air", true);
-		master.in_air = true;
-		foreach(Collider2D collider in colliders) {
-			if (collider.IsTouchingLayers(LayerMask.GetMask("Ground"))&&Mathf.Abs(yvel)<=0.3f) {
-				anim.SetBool ("in_air", false);
-				master.in_air = false;
-				break;
-			}
-		}
+			
+		//}//*/
+	}
+	
+	protected void saveToFile(float x_coor, float y_coor) {
+		BinaryFormatter bf = new BinaryFormatter ();
+		FileStream file = File.Create(Application.dataPath + "/saveData.dat");
+		SaveData data = new SaveData (this);
+		data.x_coor = x_coor;
+		data.y_coor = y_coor;
+		bf.Serialize (file, data);
+		file.Close ();
+	}
 
-		if (jump && !master.in_air) {
-			rb2d.AddForce (new Vector2 (0f, jumpForce));
-			master.SetTrigger("jump");
-		}
-		
-		jump = false;
+	protected void saveToFile() {
+		Vector3 location = transform.position;
+		float x_coor = location.x;
+		float y_coor = location.y;
+		saveToFile(x_coor, y_coor);
+	}
 
-		if (xvel > 0) {
-			facingRight = true;
-		} else if (xvel < 0) {
-			facingRight = false;
+	protected void loadFromFile() {
+		if (File.Exists (Application.dataPath + "/saveData.dat")) {
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open (Application.dataPath + "/saveData.dat", FileMode.Open);
+			SaveData data = (SaveData)bf.Deserialize(file);
+			PlayerController player = this;
+			load (data);
+			player.loadedFromFile = true;
+			file.Close ();
 		}
-		// if statement is true, in air. if false, not
-		rb2d.velocity = new Vector2(xvel * 1f, yvel);
+	}
 
-		anim.SetFloat ("speed", Mathf.Abs (xvel));
+	protected void load(SaveData data) {
+		shipMode = data.shipMode;
+		female = data.female;
+		elements = data.elements;
+		stage_name = data.stage_name;
+		loadedPosition = new Vector3(data.x_coor, data.y_coor, 0f);
+	}
+}
+
+[Serializable]
+public class SaveData {
+	public bool shipMode;
+	public bool female;
+	// colour change
+	public bool[] elements; // elements available
+	public string stage_name;
+	public float x_coor;
+	public float y_coor;
+
+	public SaveData(PlayerController player) {
+		save (player);
+	}
+
+	public void save(PlayerController player){
+		shipMode = player.shipMode;
+		female = player.female;
+		elements = player.elements;
+		stage_name = Application.loadedLevelName;
+		Vector3 location = player.transform.position;
+		x_coor = location.x;
+		y_coor = location.y;
+	}
+
+	public void load(ref PlayerController player) {
+		player.shipMode = shipMode;
+		player.female = female;
+		player.elements = elements;
+		player.stage_name = stage_name;
+		player.transform.position = new Vector3(x_coor, y_coor, 0f);
 	}
 }

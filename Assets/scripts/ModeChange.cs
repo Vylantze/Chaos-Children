@@ -12,13 +12,14 @@ public class ModeChange : MonoBehaviour {
 	public const int YEL = YELLOW;
 	public int currentColour = NONE;
 
-	public MasterPlayer master;
+	private MasterPlayer master;
 	
 	public bool isObject = false; // is this attached to an interactable object?
 	public SpriteRenderer[] activePower;
 
 	// Use this for initialization
 	void Start () {
+		master = MasterPlayer.mainPlayer;
 		if (isObject) { // if it is an object, it has the 4 colours
 			activePower = GetComponentsInChildren<SpriteRenderer> ();
 			selectSprite(); // and thus needs to have a sprite colour
@@ -60,7 +61,7 @@ public class ModeChange : MonoBehaviour {
 	}
 
 	// for interaction if it is an object
-	void OnTriggerExit2D(Collider2D collider) {
+	void OnTriggerEnter2D(Collider2D collider) {
 		if (isObject&&collider.CompareTag ("Player")) {
 			master = collider.GetComponentInParent<MasterPlayer>();
 			master.elements[currentColour] = true;

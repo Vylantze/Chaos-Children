@@ -66,7 +66,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &142960
 GameObject:
   m_ObjectHideFlags: 1
@@ -164,7 +164,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 430628}
-  m_RootOrder: 0
+  m_RootOrder: 4
 --- !u!4 &409388
 Transform:
   m_ObjectHideFlags: 1
@@ -176,7 +176,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 430628}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!4 &424864
 Transform:
   m_ObjectHideFlags: 1
@@ -201,11 +201,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 404004}
   - {fileID: 488084}
   - {fileID: 488034}
   - {fileID: 483182}
   - {fileID: 409388}
+  - {fileID: 404004}
   m_Father: {fileID: 424864}
   m_RootOrder: 0
 --- !u!4 &455530
@@ -244,7 +244,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 430628}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &488034
 Transform:
   m_ObjectHideFlags: 1
@@ -256,7 +256,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 430628}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &488084
 Transform:
   m_ObjectHideFlags: 1
@@ -268,7 +268,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 430628}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!50 &5070796
 Rigidbody2D:
   serializedVersion: 2
@@ -390,7 +390,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentColour: 0
-  master: {fileID: 0}
   isObject: 0
   activePower: []
 --- !u!114 &11427678
@@ -404,15 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 182c28cda666cbc4f9a4e9718fa89427, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipMode: 0
-  female: 1
-  flip: 1
-  in_air: 0
-  dead: 0
-  debug: {fileID: 0}
   acl: 3
-  elements: 01000000
-  switch_mode: {fileID: 0}
   jump: 0
   facingRight: 1
   moveForce: 365
@@ -421,7 +412,6 @@ MonoBehaviour:
   jumpForce: 1050
   female_chara: {fileID: 142960}
   male_chara: {fileID: 165052}
-  master: {fileID: 11450608}
 --- !u!114 &11430480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -450,13 +440,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a805abfac8ea2d4ab5ec25dd17e92c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  acl: 3
   shipMode: 0
   female: 0
+  platformer: {fileID: 0}
+  ship: {fileID: 0}
   flip: 1
   in_air: 0
   dead: 0
-  debug: {fileID: 0}
-  acl: 3
   elements: 01000000
   switch_mode: {fileID: 8300000, guid: dbf9f56ddad673f418b2167d713552cb, type: 3}
 --- !u!114 &11462420
@@ -483,15 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86dc605484ba01540bc5c6433027bc52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipMode: 0
-  female: 1
-  flip: 1
-  in_air: 0
-  dead: 0
-  debug: {fileID: 0}
   acl: 5
-  elements: 01000000
-  switch_mode: {fileID: 0}
   max: 10
   master: {fileID: 11450608}
 --- !u!114 &11492448
@@ -514,7 +497,6 @@ MonoBehaviour:
   chara_change: {fileID: 8300000, guid: c11a27f21bb96aa409f3c626f89e3b22, type: 3}
   normalShot: {fileID: 8300000, guid: 70b708e4c32e252488be20c9b3d275d8, type: 3}
   chargedShot: {fileID: 8300000, guid: e3a648d16554c8a47ad3dd8eba3266f6, type: 3}
-  master: {fileID: 11450608}
   rf_c: 0
 --- !u!212 &21206226
 SpriteRenderer:
@@ -539,7 +521,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1783731295
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: b8b06d408d8663546a7a7642b3d87d63, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!212 &21243670

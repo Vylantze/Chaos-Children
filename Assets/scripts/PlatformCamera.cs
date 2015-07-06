@@ -16,7 +16,7 @@ public class PlatformCamera : MonoBehaviour {
 	
 	void Start ()
 	{
-		master = GameObject.FindGameObjectWithTag("Player").GetComponentInParent<MasterPlayer> ();
+		master = MasterPlayer.mainPlayer;
 		// Setting up the reference.
 		shipMode = master.shipMode;
 		assignTransform ();
@@ -38,9 +38,9 @@ public class PlatformCamera : MonoBehaviour {
 
 	void assignTransform() {
 		if (!shipMode) {
-			player = master.GetComponentInChildren<PlayerController> ().transform;
+			player = master.platformer.transform;
 		} else {
-			player = master.GetComponentInChildren<ShipController> ().transform;
+			player = master.ship.transform;
 		}
 	}
 	

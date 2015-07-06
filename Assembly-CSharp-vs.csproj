@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\WallScript.cs" />
      <Compile Include="Assets\scripts\BulletDestroy.cs" />
      <Compile Include="Assets\scripts\BulletScript.cs" />
      <Compile Include="Assets\scripts\Charge.cs" />
@@ -60,11 +59,13 @@
      <Compile Include="Assets\scripts\MasterPlayer.cs" />
      <Compile Include="Assets\scripts\ModeChange.cs" />
      <Compile Include="Assets\scripts\PlatformCamera.cs" />
+     <Compile Include="Assets\scripts\PlatformController.cs" />
      <Compile Include="Assets\scripts\PlayerController.cs" />
      <Compile Include="Assets\scripts\Rapid.cs" />
+     <Compile Include="Assets\scripts\SceneManager.cs" />
      <Compile Include="Assets\scripts\ShipController.cs" />
      <Compile Include="Assets\scripts\Stage0.cs" />
-     <Compile Include="Assets\scripts\shipCamera.cs" />
+     <Compile Include="Assets\scripts\WallScript.cs" />
      <Compile Include="Assets\scripts\snowfield.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
