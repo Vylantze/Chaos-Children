@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class Stage0 : MonoBehaviour {
-	public PlatformCamera cam;
-
 	public Transform startPosition;
 	public Vector3 spawnPoint;
 	// Use this for initialization
@@ -12,14 +10,9 @@ public class Stage0 : MonoBehaviour {
 			MasterPlayer.mainPlayer.loadedFromFile = false;
 			spawnPoint = MasterPlayer.mainPlayer.transform.position;
 		} else {
-			spawnPoint = startPosition.position;
-			Restart ();
+			// spawn at start point
+			MasterPlayer.mainPlayer.gameObject.transform.position = startPosition.position;
 		}
-
-	}
-
-	public void Restart() {
-		MasterPlayer.mainPlayer.gameObject.transform.position = spawnPoint;
 	}
 	
 	// Update is called once per frame
@@ -29,8 +22,8 @@ public class Stage0 : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.tag == "Player") {
+			// activate save function
 			MasterPlayer.mainPlayer.save(MasterPlayer.mainPlayer.platformer.transform.position);
-			spawnPoint = MasterPlayer.mainPlayer.transform.position;
 		}
 	}
 }

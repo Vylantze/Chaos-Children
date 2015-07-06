@@ -9,11 +9,12 @@ public class ColourMonitor : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		activePower = GetComponentsInChildren<Image>();
+		selectSprite ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (player.currentColour!=currentColour) {
+		if (player.currentColour != currentColour) {
 			currentColour = player.currentColour;
 			selectSprite ();
 		}

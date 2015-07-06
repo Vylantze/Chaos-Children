@@ -404,6 +404,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acl: 3
+  shipMode: 0
+  female: 1
+  elements: 01000000
+  commands:
+  - None
+  - FireMode
+  - ThunderMode
+  - IceMode
+  stage_name: 
+  loadedFromFile: 0
   jump: 0
   facingRight: 1
   moveForce: 365
@@ -443,12 +453,19 @@ MonoBehaviour:
   acl: 3
   shipMode: 0
   female: 0
+  elements: 01000000
+  commands:
+  - None
+  - FireMode
+  - ThunderMode
+  - IceMode
+  stage_name: 
+  loadedFromFile: 0
   platformer: {fileID: 0}
   ship: {fileID: 0}
   flip: 1
   in_air: 0
   dead: 0
-  elements: 01000000
   switch_mode: {fileID: 8300000, guid: dbf9f56ddad673f418b2167d713552cb, type: 3}
 --- !u!114 &11462420
 MonoBehaviour:
@@ -475,6 +492,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acl: 5
+  shipMode: 0
+  female: 1
+  elements: 01000000
+  commands:
+  - None
+  - FireMode
+  - ThunderMode
+  - IceMode
+  stage_name: 
+  loadedFromFile: 0
   max: 10
   master: {fileID: 11450608}
 --- !u!114 &11492448
