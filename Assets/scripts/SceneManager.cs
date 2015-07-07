@@ -38,7 +38,11 @@ public class SceneManager : MonoBehaviour {
 	void OnGUI()
 	{
 		if (isPaused) {
-			GUI.Box(new Rect(0,0,100,50),"PAUSED");
+			GUI.Box(new Rect(Screen.currentResolution.width/2-100,
+			                 Screen.currentResolution.height/2-100,
+			                 100,
+			                 50),
+			        "PAUSED");
 		}
 	}
 

@@ -1314,14 +1314,14 @@ RectTransform:
   m_GameObject: {fileID: 1256412416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.58021188, y: 1.58021152, z: 1.58021152}
   m_Children:
   - {fileID: 20391834}
   m_Father: {fileID: 134372025}
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 281, y: -94.6999969}
+  m_AnchoredPosition: {x: 382, y: -173}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1256412418
@@ -1494,14 +1494,14 @@ RectTransform:
   m_GameObject: {fileID: 1292075034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.58021188, y: 1.58021152, z: 1.58021152}
   m_Children:
   - {fileID: 261106877}
   m_Father: {fileID: 134372025}
   m_RootOrder: 1
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 281.000031, y: -131}
+  m_AnchoredPosition: {x: 382, y: -238}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1292075036
@@ -1752,13 +1752,13 @@ RectTransform:
   m_GameObject: {fileID: 1550269290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.56780112, y: 1.56780136, z: 1.56780136}
   m_Children: []
   m_Father: {fileID: 134372025}
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: -265, y: -21}
+  m_AnchoredPosition: {x: -363, y: -44}
   m_SizeDelta: {x: 259.166656, y: 456.666656}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1550269292
@@ -2179,8 +2179,8 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_UiScaleMode: 1
+  m_ReferencePixelsPerUnit: 10
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
