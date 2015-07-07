@@ -16,8 +16,7 @@ public class MapLimit : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D collider) {
 		if (collider.CompareTag ("Player")) {
 			//GetComponentInParent<Stage0>().Restart();
-			MasterPlayer master = MasterPlayer.mainPlayer;
-			master.Restart();
+			MasterPlayer.mainPlayer.Restart();
 		}
 	}
 }

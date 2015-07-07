@@ -25,9 +25,14 @@ public class Rapid : MonoBehaviour {
 			fire ();
 		}
 
-		if (Input.GetButtonUp ("FireBullet")) {
+		if (!Input.GetButton ("FireBullet")) { //as long as fire button is not held
 			currentAngle = 0;
 		}
+	}
+
+	public void reset() {
+		currentAngle = 0;
+		shotWaitTimer = 0f;
 	}
 	
 	void fire() {

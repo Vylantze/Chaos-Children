@@ -45,15 +45,33 @@ public class ShipController : PlayerController {
 	public void colliderEnabled(bool value) {
 		foreach (Collider2D collider in colliders) {
 			collider.enabled = value;
+			collider.isTrigger = !value;
 		}
 	}
 
 	
 	public void reset() {
+		transform.localPosition = Vector3.zero;
+		colliderEnabled (true);
 		rb2d.gravityScale = 0f;
 		rb2d.velocity = Vector2.zero;
 		xvel = yvel = 0f;
 		_up = _down = _left = _right = 0;
 		_godown = _goright = false;
+		spriteEnabled (true);
+	}
+	
+	
+	public void spriteEnabled(bool value) {
+		SpriteRenderer[] sprites = GetComponentsInChildren<SpriteRenderer> ();
+		foreach (SpriteRenderer sprite in sprites) {
+			sprite.enabled = value;
+		}
+	}
+	
+	public void disable() {
+		reset ();
+		colliderEnabled (false);
+		spriteEnabled (false);
 	}
 }

@@ -25,6 +25,8 @@ public class Charge : MonoBehaviour {
 	public float chargeTime = 1f; 	// charging times before max - *3 of charge time to get max charge
 	private float chargeTimer = 0f;
 	public Animator charge_anim;
+
+	private bool reset_mode = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -34,83 +36,88 @@ public class Charge : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float time = Time.time; // current time
-		// ATTACK
-		if (firingDone && Input.GetButtonDown ("FireBullet")) { 
-			// if charged mode and valid for firing
-			chargeTimer = time + chargeTime; // start a charge timer
-		}
-
-
-		
-		// UPDATES REGARDING CHARGED SHOTS
-		// if charge mode and holding fire button
-		if (Input.GetButton ("FireBullet")) { 
-			if (time >= chargeTimer && chargeLevel <= totalChargeLevels) { // if charged for a certain time
-				charge (); // activate charge and increase charge level
-				chargeTimer = time + chargeTime; // reset timer
+		if (!reset_mode) {
+			float time = Time.time; // current time
+			// ATTACK
+			if (firingDone && Input.GetButtonDown ("FireBullet")) { 
+				// if charged mode and valid for firing
+				chargeTimer = time + chargeTime; // start a charge timer
 			}
-
-			// if charge level already exists, make sure that the attack keeps following character
-			if (chargeLevel > 0) {
-				charge_anim.SetInteger ("charge_level", chargeLevel);
-				Vector3 scale = chargedShot.transform.localScale;
-				if (master.shipMode) {
-					chargedShot.transform.position = master.shipPosition ();
-				} else {
-					chargedShot.transform.position = master.platformPosition ();
-					if (master.flip) { // if facing front yet looking behind
-						scale.x = Mathf.Abs (scale.x) * 1;
-					} else {
-						scale.x = Mathf.Abs (scale.x) * -1;
-					}
+			// UPDATES REGARDING CHARGED SHOTS
+			// if charge mode and holding fire button
+			if (Input.GetButton ("FireBullet")) { 
+				if (time >= chargeTimer && chargeLevel <= totalChargeLevels) { // if charged for a certain time
+					charge (); // activate charge and increase charge level
+					chargeTimer = time + chargeTime; // reset timer
 				}
-				chargedShot.transform.localScale = scale;
+
+				// if charge level already exists, make sure that the attack keeps following character
+				if (chargeLevel > 0&&chargedShot!=null) {
+					charge_anim.SetInteger ("charge_level", chargeLevel);
+					Vector3 scale = chargedShot.transform.localScale;
+					if (master.shipMode) {
+						chargedShot.transform.position = master.shipPosition ();
+					} else {
+						chargedShot.transform.position = master.platformPosition ();
+						if (master.flip) { // if facing front yet looking behind
+							scale.x = Mathf.Abs (scale.x) * 1;
+						} else {
+							scale.x = Mathf.Abs (scale.x) * -1;
+						}
+					}
+					chargedShot.transform.localScale = scale;
+				}
+			}// if charged shot is fired/released
+			else if (Input.GetButtonUp ("FireBullet") && chargedShot != null) { // and chargedShot exists
+				fireChargedShot ();
+			} else if (Input.GetButtonUp ("FireBullet")) {
+				fire ();
+			} else if (chargedShot != null) { // else if the button not held, fire it away first chance possible
+				fireChargedShot ();
+			} else { // else basically button not held down
+				charge_anim.SetBool ("charge", false);
+				charge_anim.SetInteger ("charge_level", 0); // reset
+				master.setCharge (0f);
+				chargeLevel = 0;
 			}
-		}// if charged shot is fired/released
-		else if (Input.GetButtonUp ("FireBullet") && chargedShot != null) { // and chargedShot exists
-			fireChargedShot ();
-		} else if (Input.GetButtonUp ("FireBullet")) {
-			fire ();
-		} else if (chargedShot!=null) {
-			fireChargedShot();
-		}
 
-
-		//  LIMIT NUMBER OF SHOTS FIRED
-		if (numShots >= totalShotsAllowed) {
-			firingDone = false;
-			numShots = 0;
-		}
+			//  LIMIT NUMBER OF SHOTS FIRED
+			if (numShots >= totalShotsAllowed) {
+				firingDone = false;
+				numShots = 0;
+			}
 		
-		if (!firingDone) {
-			if (time>=timer) { // if waiting time has expired
-				firingDone = true;
+			if (!firingDone) {
+				if (time >= timer) { // if waiting time has expired
+					firingDone = true;
+				}
 			}
 		}
-
 	}
 
 	void fireChargedShot() {
 		float time = Time.time; // current time
-		chargedCollider.enabled = true;
+		if (chargedShot != null) {
+			chargedCollider.enabled = true;
 		
-		if (chargeLevel>1) {
-			script.charged = true;
-			AudioSource.PlayClipAtPoint(gun.chargedShot,transform.position);
-		}
-		else {AudioSource.PlayClipAtPoint(gun.normalShot,transform.position); }
+			if (chargeLevel > 1) {
+				script.charged = true;
+				AudioSource.PlayClipAtPoint (gun.chargedShot, transform.position);
+			} else {
+				AudioSource.PlayClipAtPoint (gun.normalShot, transform.position);
+			}
 		
-		chargedShot.GetComponent<SpriteRenderer>().enabled = true;
-		if (master.shipMode) { // if it is ship mode, just fire upwards
-			chargedShot.velocity = new Vector2 (0f, gun.bullet_speed);
-		} else {
-			master.SetTrigger ("shoot");
-			charge_anim.SetBool("charge", false);
-			charge_anim.SetInteger("charge_level", 0); // reset
-			master.setCharge(0f); // reset 'charging' layer weight to 0
-			chargedShot.velocity = new Vector2 (Mathf.Sign (chargedShot.transform.localScale.x) * gun.bullet_speed, 0f);
+			chargedShot.GetComponent<SpriteRenderer> ().enabled = true;
+			if (master.shipMode) { // if it is ship mode, just fire upwards
+				chargedShot.velocity = new Vector2 (0f, gun.bullet_speed);
+			} else {
+				master.SetTrigger ("shoot");
+				master.setCharge (0f); // reset 'charging' layer weight to 0
+				chargedShot.velocity = new Vector2 (Mathf.Sign (chargedShot.transform.localScale.x) * gun.bullet_speed, 0f);
+			}
 		}
+		charge_anim.SetBool("charge", false);
+		charge_anim.SetInteger("charge_level", 0); // reset
 		chargeLevel = 0;
 		chargedShot = null;
 		shotWaitTimer = shotWait + time; // reset timer for normal shots also
@@ -121,8 +128,8 @@ public class Charge : MonoBehaviour {
 		if (chargedShot==null) {
 			if (!master.shipMode) {
 				master.setCharge(1f); // set 'charging' layer to activate
-				charge_anim.SetBool("charge", true);
 			}
+			charge_anim.SetBool("charge", true);
 			chargedShot = Instantiate (gun.bullet, gun.firingLocation.position, Quaternion.identity) as Rigidbody2D;
 			chargedShot.gameObject.SetActive(true);
 			chargedCollider = chargedShot.GetComponent<CircleCollider2D>();
@@ -174,5 +181,20 @@ public class Charge : MonoBehaviour {
 				bulletInstance.transform.localScale = scale; 
 			}
 		}
+	}
+
+	public void reset() {
+		reset_mode = true;
+		if (chargedShot != null) {
+			Destroy(chargedShot.gameObject);
+			chargedShot = null;
+		}
+		chargeLevel = 0;
+		chargeTimer = 0f;
+		firingDone = true;
+		// reset charge animation
+		charge_anim.SetBool("charge", false);
+		charge_anim.SetInteger("charge_level", 0); // reset
+		reset_mode = false;
 	}
 }

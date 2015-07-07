@@ -4,8 +4,8 @@ using System.Collections;
 
 public class SceneManager : MonoBehaviour {
 	public static SceneManager manager;
-	public string[] scenes = { "tutorial", "tutorialBoss" };
-	public int currentScene = -1;
+	public string[] scenes = { "title_screen", "tutorial"};
+	public int currentScene = 0;
 	public bool isPaused = false;
 
 	// Use this for initialization
@@ -17,10 +17,13 @@ public class SceneManager : MonoBehaviour {
 			Destroy (gameObject);
 		}
 	}
+
+	void Start() {
+	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown("Pause")&&currentScene!=-1) {
+		if (Input.GetButtonDown("Pause")&&currentScene!=0) {
 			isPaused = !isPaused;
 			if (isPaused) { 
 				Time.timeScale = 0;
@@ -32,6 +35,10 @@ public class SceneManager : MonoBehaviour {
 				MasterPlayer.mainPlayer.ship.enabled = MasterPlayer.mainPlayer.shipMode;
 				MasterPlayer.mainPlayer.platformer.enabled = !MasterPlayer.mainPlayer.shipMode;
 			}
+		}
+
+		if (currentScene == 0) {
+			MasterPlayer.mainPlayer.enableAll (false);
 		}
 	}
 
@@ -55,20 +62,23 @@ public class SceneManager : MonoBehaviour {
 	}
 
 	public void loadScene() {
-		Application.LoadLevel (scenes [currentScene]);
+		loadScene(scenes[currentScene]);
 	}
 
 	public void loadScene(string sceneName) {
+		Debug.Log ("stuff");
+		MasterPlayer.mainPlayer.enableAll (true);
+		MasterPlayer.mainPlayer.reset ();
 		Application.LoadLevel (sceneName);
 	}
 
 	public void StartGame() {
-		currentScene = 0;
-		MasterPlayer.mainPlayer.loadPosition();
+		currentScene = 1;
 		loadScene ();
 	}
 
 	public void ContinueGame() {
+		currentScene = 1;
 		MasterPlayer master = MasterPlayer.mainPlayer;
 		master.loadFromFile ();
 		master.loadedFromFile = false; // to prevent auto save functions from triggering
@@ -79,7 +89,7 @@ public class SceneManager : MonoBehaviour {
 			}
 		}
 		// if failed to find the name, start new game
-		currentScene = 0;
+		currentScene = 1;
 		master.loadPosition();
 		loadScene ();
 	}

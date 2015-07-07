@@ -7,8 +7,10 @@ public class MasterPlayer : PlayerController {
 
 	public PlatformController platformer;
 	public ShipController ship;
+	public GunScript gun;
 	public bool flip = true; // true = faceright, false = faceleft
 	public bool in_air = false;
+	bool saved_before = false; // at the start of the game, shouldn't have saved before
 
 	// health
 	public bool dead = false;
@@ -27,14 +29,12 @@ public class MasterPlayer : PlayerController {
 	}
 
 	void Start () {
+		saved_before = false;
+		loadedFromFile = false;
+		gun = GetComponentInChildren<GunScript> ();
 		ship = GetComponentInChildren<ShipController> ();
 		platformer = GetComponentInChildren<PlatformController> ();
-		switchMode (shipMode);
-	}
-
-	void switchMode(bool isShipOn) {
-		triggerPlatform(!isShipOn);
-		triggerShip (isShipOn);
+		reset ();
 	}
 
 	void loadAnimator() {
@@ -45,26 +45,14 @@ public class MasterPlayer : PlayerController {
 			anim = platformer.female_chara.GetComponent<Animator>(); // load female animator
 		} else { // else if male
 			anim = platformer.male_chara.GetComponent<Animator>();; // load male animator
+			setCharge (0f); // set 'charging' layer to 0
 		}
 		platformer.setAnimator(anim);
 	}
 
-	
-	void triggerPlatform(bool activated) {
-		//platformer.colliderEnabled(activated); // enable/disable collider
-		loadAnimator ();
-		platformer.enabled = activated; // disable the controller
-	}
-
-	void triggerShip(bool activated) {
-		ship.colliderEnabled(activated); // enable/disable collider
-		ship.GetComponentInChildren<SpriteRenderer>().enabled = activated;
-		ship.enabled = activated;
-	}
-	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown("Switch Mode")&&Debug.debug) {
+		if (Input.GetButtonDown("Switch Mode")&&STATUS.debug) {
 			female = !female;
 			// true is female
 			// false is male
@@ -74,7 +62,7 @@ public class MasterPlayer : PlayerController {
 			colourChange ();
 		}
 		/*
-		if (Input.GetButtonDown("SwitchScene")&&debug.debug) {
+		if (Input.GetButtonDown("SwitchScene")&&STATUS.debug) {
 			shipMode = !shipMode;
 			ship.gameObject.SetActive(shipMode);
 			platformer.gameObject.SetActive(!shipMode);
@@ -93,44 +81,54 @@ public class MasterPlayer : PlayerController {
 	}
 
 	public void Restart() {
+		reset();
 		Application.LoadLevel (Application.loadedLevel);
 		PlatformCamera camera = PlatformCamera.mainCamera;
 		camera.lockCamera = true;
+		camera.enabled = false;
 		loadFromFile ();
+		if (saved_before) {
+			mainPlayer.loadPosition (); 
+		}
 		camera.transform.position = transform.position;
-		MasterPlayer.mainPlayer.loadPosition ();
+		reset ();
 		camera.lockCamera = false;
+		camera.enabled = true;
 	}
 
 	public void SetTrigger(string value) {
 		anim.SetTrigger (value);
 	}
 
-	void Reanimate() {
+	public void reset() {
 		dead = false;
-		Collider2D[] colliders = transform.GetComponentsInChildren<Collider2D> ();
-		foreach (Collider2D collider in colliders) {
-			collider.isTrigger = false;
-		}
 		if (!shipMode) {
 			platformer.enabled = true;
-			anim.SetBool ("dead", false);
+			loadAnimator();
 			platformer.reset();
+			ship.disable ();
 		} else {
 			ship.enabled = true; 
-			// and reset the gravity for rb2d
 			ship.reset();
+			platformer.disable ();
 		}
+		gun.reset ();
+	}
+
+	public void enableAll(bool value) {
+		platformer.enabled = value;
+		ship.enabled = value;
+		gun.enableGuns (value);
+		gun.enabled = value;
+	}
+
+	public void enableGuns(bool value) {
+		gun.enableGuns (value);
+		gun.enabled = value;
 	}
 
 	public void loadPosition() {
 		transform.position = loadedPosition;
-		if (shipMode) {
-			ship.gameObject.transform.localPosition = Vector3.zero;
-		} else {
-			platformer.gameObject.transform.localPosition = Vector3.zero;
-		}
-		Reanimate ();
 	}
 
 	public void Death(){
@@ -172,14 +170,17 @@ public class MasterPlayer : PlayerController {
 	}
 
 	public void setCharge(float value) {
-		anim.SetLayerWeight(1, value);
+		if (!female&&!shipMode) { // only if male chara and platformer mode
+			anim.SetLayerWeight (1, value);
+		}
 	}
 
 	public void save() {
-		saveToFile ();
+		save (transform.position);
 	}
 
 	public void save(Vector3 position) {
+		saved_before = true;
 		saveToFile ("autoSave", position.x, position.y);
 	}
 }

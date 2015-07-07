@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class GunScript : MonoBehaviour {
+	public static GunScript gun;
 	// bullet stuff
 	public Rigidbody2D bullet;
 	public Transform firingLocation;
@@ -32,6 +33,23 @@ public class GunScript : MonoBehaviour {
 		master = MasterPlayer.mainPlayer;
 		rapid = GetComponentInChildren<Rapid> ();
 		charge = GetComponentInChildren<Charge> ();
+		reset ();
+	}
+
+	void activateGun() {
+		rapid.enabled = rf_c;
+		charge.enabled = !rf_c;
+	}
+
+	public void enableGuns(bool value) {
+		rapid.enabled = charge.enabled = value;
+	}
+
+	public void reset(){
+		enableGuns(true);
+		charge.reset ();
+		rapid.reset ();
+		enableGuns(false);
 		if (master.shipMode) {
 			firingLocation = shipLocation;
 			bullet_speed = ship_speed;
@@ -40,29 +58,24 @@ public class GunScript : MonoBehaviour {
 			firingLocation = platformLocation;
 			bullet_speed = platformer_speed;
 		}
-
+		
 		rf_c = master.female;
 		// true is rapid fire/female
 		// false is charged mode/male
 		activateGun ();
-	}
-
-	void activateGun() {
-		rapid.enabled = rf_c;
-		charge.enabled = !rf_c;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (!master.dead && !SceneManager.manager.isPaused) {
 			// switch mdes // debug only
-			if (Input.GetButtonDown ("Switch Mode") && Debug.debug) {
+			if (Input.GetButtonDown ("Switch Mode") && STATUS.debug) {
 				AudioSource.PlayClipAtPoint (chara_change, transform.position);
 				rf_c = !rf_c;
 				// true is rapid fire
 				// false is charge
 			}
-			if (Input.GetButtonDown ("SwitchScene") && Debug.debug) {
+			if (Input.GetButtonDown ("SwitchScene") && STATUS.debug) {
 				//rapid = GetComponentInChildren<Rapid> ();
 				//charge = GetComponentInChildren<Charge> ();
 				if (master.shipMode) {

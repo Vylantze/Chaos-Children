@@ -50,7 +50,6 @@
      <Compile Include="Assets\scripts\BulletScript.cs" />
      <Compile Include="Assets\scripts\Charge.cs" />
      <Compile Include="Assets\scripts\ColourMonitor.cs" />
-     <Compile Include="Assets\scripts\Debug.cs" />
      <Compile Include="Assets\scripts\Enemy.cs" />
      <Compile Include="Assets\scripts\EnemyGun.cs" />
      <Compile Include="Assets\scripts\Flamethrower.cs" />
@@ -62,6 +61,7 @@
      <Compile Include="Assets\scripts\PlatformController.cs" />
      <Compile Include="Assets\scripts\PlayerController.cs" />
      <Compile Include="Assets\scripts\Rapid.cs" />
+     <Compile Include="Assets\scripts\STATUS.cs" />
      <Compile Include="Assets\scripts\SceneManager.cs" />
      <Compile Include="Assets\scripts\ShipController.cs" />
      <Compile Include="Assets\scripts\Stage0.cs" />

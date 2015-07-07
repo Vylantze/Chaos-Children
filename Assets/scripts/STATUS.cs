@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Debug : MonoBehaviour {
+public class STATUS : MonoBehaviour {
 	public static bool debug = true;
 	// Use this for initialization
 	void Start () {

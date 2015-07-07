@@ -660,7 +660,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!114 &538225842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -755,7 +755,7 @@ Transform:
   m_LocalPosition: {x: -40.5, y: -30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 622712868}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!61 &550041065
 BoxCollider2D:
@@ -782,9 +782,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenes:
+  - title_screen
   - tutorial
-  - tutorialBoss
-  currentScene: -1
+  currentScene: 0
   isPaused: 0
 --- !u!1 &622712867
 GameObject:
@@ -811,12 +811,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 550041064}
   - {fileID: 936262002}
   - {fileID: 975816622}
   - {fileID: 1289192514}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &634467439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,7 +1093,7 @@ Transform:
   - {fileID: 416853427}
   - {fileID: 378275066}
   m_Father: {fileID: 622712868}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!1 &975816621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,7 +1125,7 @@ Transform:
   - {fileID: 375394962}
   - {fileID: 1661050559}
   m_Father: {fileID: 622712868}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!212 &975816623
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1191,7 +1190,7 @@ Transform:
   m_LocalScale: {x: .894610226, y: .905934155, z: .905934155}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1001 &1034964674
 Prefab:
   m_ObjectHideFlags: 0
@@ -1279,10 +1278,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 424864, guid: 89898d8f5d0aee44f83c408f22adb35b, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 195090, guid: 89898d8f5d0aee44f83c408f22adb35b, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427678, guid: 89898d8f5d0aee44f83c408f22adb35b, type: 2}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1657,7 +1660,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 438358, guid: 86d04bfec7a93e347b4d9cfe9ef409cb, type: 2}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 141384, guid: 86d04bfec7a93e347b4d9cfe9ef409cb, type: 2}
       propertyPath: m_IsActive
@@ -1915,7 +1918,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!1 &1661050558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2146,7 +2149,7 @@ RectTransform:
   - {fileID: 134372025}
   - {fileID: 141271110}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -2322,10 +2325,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentColour: -1
   activePower: []
-  player: {fileID: 2087054950}
---- !u!114 &2087054950 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11420560, guid: 89898d8f5d0aee44f83c408f22adb35b,
-    type: 2}
-  m_PrefabInternal: {fileID: 1212571595}
-  m_Script: {fileID: 11500000, guid: 949536032ca11cb44abd032a68bdf953, type: 3}

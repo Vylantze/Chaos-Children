@@ -5,9 +5,10 @@ using System.Collections;
 public class ColourMonitor : MonoBehaviour {
 	public int currentColour = -1;
 	public Image[] activePower;
-	public ModeChange player;
+	ModeChange player;
 	// Use this for initialization
 	void Start () {
+		player = MasterPlayer.mainPlayer.GetComponent<ModeChange> ();
 		activePower = GetComponentsInChildren<Image>();
 		selectSprite ();
 	}
