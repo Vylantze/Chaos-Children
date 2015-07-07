@@ -4,9 +4,9 @@ using System.Collections;
 
 public class SceneManager : MonoBehaviour {
 	public static SceneManager manager;
-	public PlatformCamera cam;
 	public string[] scenes = { "tutorial", "tutorialBoss" };
 	public int currentScene = -1;
+	public bool isPaused = false;
 
 	// Use this for initialization
 	void Awake () {
@@ -20,7 +20,26 @@ public class SceneManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.GetButtonDown("Pause")&&currentScene!=-1) {
+			isPaused = !isPaused;
+			if (isPaused) { 
+				Time.timeScale = 0;
+				MasterPlayer.mainPlayer.ship.enabled = false;
+				MasterPlayer.mainPlayer.platformer.enabled = false;
+			}
+			else {
+				Time.timeScale = 1; 
+				MasterPlayer.mainPlayer.ship.enabled = MasterPlayer.mainPlayer.shipMode;
+				MasterPlayer.mainPlayer.platformer.enabled = !MasterPlayer.mainPlayer.shipMode;
+			}
+		}
+	}
+
+	void OnGUI()
+	{
+		if (isPaused) {
+			GUI.Box(new Rect(0,0,100,50),"PAUSED");
+		}
 	}
 
 	public string nextScene() {
@@ -32,7 +51,6 @@ public class SceneManager : MonoBehaviour {
 	}
 
 	public void loadScene() {
-		
 		Application.LoadLevel (scenes [currentScene]);
 	}
 

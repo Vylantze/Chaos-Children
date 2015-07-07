@@ -54,23 +54,28 @@ public class GunScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		// switch mdes // debug only
-		if (Input.GetButtonDown("Switch Mode")&&Debug.debug) {
-			AudioSource.PlayClipAtPoint(chara_change, transform.position);
-			rf_c = !rf_c;
-			// true is rapid fire
-			// false is charge
-			activateGun();
+		if (!master.dead && !SceneManager.manager.isPaused) {
+			// switch mdes // debug only
+			if (Input.GetButtonDown ("Switch Mode") && Debug.debug) {
+				AudioSource.PlayClipAtPoint (chara_change, transform.position);
+				rf_c = !rf_c;
+				// true is rapid fire
+				// false is charge
+			}
+			if (Input.GetButtonDown ("SwitchScene") && Debug.debug) {
+				//rapid = GetComponentInChildren<Rapid> ();
+				//charge = GetComponentInChildren<Charge> ();
+				if (master.shipMode) {
+					firingLocation = shipLocation;
+				} else {
+					firingLocation = platformLocation;
+				}
+			}//*/
+
+			activateGun ();
+		} else if (SceneManager.manager.isPaused) {
+			rapid.enabled = false;
+			charge.enabled = false;
 		}
-		if (Input.GetButtonDown ("SwitchScene") && Debug.debug) {
-			//rapid = GetComponentInChildren<Rapid> ();
-			//charge = GetComponentInChildren<Charge> ();
-			if (master.shipMode) {
-				firingLocation = shipLocation;
-			}
-			else {
-				firingLocation = platformLocation;
-			}
-		}//*/
 	}
 }

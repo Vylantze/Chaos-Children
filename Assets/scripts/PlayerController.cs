@@ -62,13 +62,15 @@ public class PlayerController : MonoBehaviour {
 		
 		// Release inputs
 		// Vertical
-		if (Input.GetButtonUp("Up")) {
+		if (Input.GetButtonUp ("Up")) {
 			_up = 0;
 			_godown = true;
-		}
-		else if (Input.GetButtonUp("Down")) { 
+		} else if (Input.GetButtonUp ("Down")) { 
 			_down = 0;
 			_godown = false;
+		} else if (!Input.GetButton ("Down")&&!Input.GetButton ("Up")) {
+			_down = 0;
+			_up = 0;
 		}
 		// Horizontal
 		if (Input.GetButtonUp("Right")) {
@@ -78,6 +80,10 @@ public class PlayerController : MonoBehaviour {
 		else if (Input.GetButtonUp("Left")) { 
 			_left = 0;
 			_goright = true;
+		}
+		else if (!Input.GetButton("Right")&&!Input.GetButton("Left")){
+			_left = 0;
+			_right = 0;
 		}
 	}
 	

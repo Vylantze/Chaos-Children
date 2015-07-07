@@ -905,6 +905,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 11450608, guid: 89898d8f5d0aee44f83c408f22adb35b, type: 2}
+      propertyPath: elements.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 89898d8f5d0aee44f83c408f22adb35b, type: 2}
   m_IsPrefabParent: 0
@@ -1459,7 +1463,6 @@ MonoBehaviour:
   currentColour: -1
   activePower: []
   player: {fileID: 2087054950}
-  inGame: 1
 --- !u!114 &2087054950 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 11420560, guid: 89898d8f5d0aee44f83c408f22adb35b,
