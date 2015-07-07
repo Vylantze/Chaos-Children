@@ -93,16 +93,13 @@ public class MasterPlayer : PlayerController {
 	}
 
 	public void Restart() {
-		Reanimate ();
+		Application.LoadLevel (Application.loadedLevel);
+		PlatformCamera camera = PlatformCamera.mainCamera;
+		camera.lockCamera = true;
 		loadFromFile ();
-		PlatformCamera camera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<PlatformCamera> ();
+		camera.transform.position = transform.position;
+		MasterPlayer.mainPlayer.loadPosition ();
 		camera.lockCamera = false;
-		//camera.transform.position = transform.position;
-		if (shipMode) {
-			ship.gameObject.transform.localPosition = Vector3.zero;
-		} else {
-			platformer.gameObject.transform.localPosition = Vector3.zero;
-		}
 	}
 
 	public void SetTrigger(string value) {
@@ -124,6 +121,16 @@ public class MasterPlayer : PlayerController {
 			// and reset the gravity for rb2d
 			ship.reset();
 		}
+	}
+
+	public void loadPosition() {
+		transform.position = loadedPosition;
+		if (shipMode) {
+			ship.gameObject.transform.localPosition = Vector3.zero;
+		} else {
+			platformer.gameObject.transform.localPosition = Vector3.zero;
+		}
+		Reanimate ();
 	}
 
 	public void Death(){
@@ -173,6 +180,6 @@ public class MasterPlayer : PlayerController {
 	}
 
 	public void save(Vector3 position) {
-		saveToFile (position.x, position.y);
+		saveToFile ("autoSave", position.x, position.y);
 	}
 }

@@ -130,9 +130,9 @@ public class PlayerController : MonoBehaviour {
 		//}//*/
 	}
 	
-	protected void saveToFile(float x_coor, float y_coor) {
+	protected void saveToFile(string fileName, float x_coor, float y_coor) {
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Create(Application.dataPath + "/saveData.dat");
+		FileStream file = File.Create(Application.dataPath + "/" + fileName + ".dat");
 		SaveData data = new SaveData (this);
 		data.x_coor = x_coor;
 		data.y_coor = y_coor;
@@ -144,19 +144,23 @@ public class PlayerController : MonoBehaviour {
 		Vector3 location = transform.position;
 		float x_coor = location.x;
 		float y_coor = location.y;
-		saveToFile(x_coor, y_coor);
+		saveToFile("autoSave", x_coor, y_coor);
 	}
 
-	protected void loadFromFile() {
-		if (File.Exists (Application.dataPath + "/saveData.dat")) {
+	public void loadFromFile(string fileName) {
+		if (File.Exists (Application.dataPath + "/" + fileName + ".dat")) {
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.dataPath + "/saveData.dat", FileMode.Open);
+			FileStream file = File.Open (Application.dataPath + "/" + fileName + ".dat", FileMode.Open);
 			SaveData data = (SaveData)bf.Deserialize(file);
 			PlayerController player = this;
 			load (data);
 			player.loadedFromFile = true;
 			file.Close ();
 		}
+	}
+
+	public void loadFromFile() {
+		loadFromFile ("autoSave");
 	}
 
 	protected void load(SaveData data) {

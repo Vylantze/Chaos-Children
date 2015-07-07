@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class PlatformCamera : MonoBehaviour {
+	public static PlatformCamera mainCamera;
 	public float xMargin = 1f;		// Distance in the x axis the player can move before the camera follows.
 	public float yMargin = 4f;		// Distance in the y axis the player can move before the camera follows.
 	public float xSmooth = 8f;		// How smoothly the camera catches up with it's target movement in the x axis.
@@ -13,13 +14,29 @@ public class PlatformCamera : MonoBehaviour {
 	public Transform player;		// Reference to the player's transform.
 	MasterPlayer master;
 	bool shipMode;
-	
+
+	void Awake() {
+		if (mainCamera == null) {
+			DontDestroyOnLoad (gameObject);
+			mainCamera = this;
+		} else {
+			Destroy (gameObject);
+		}
+	}
+
 	void Start ()
 	{
 		master = MasterPlayer.mainPlayer;
 		// Setting up the reference.
 		shipMode = master.shipMode;
 		assignTransform ();
+		if (lockCamera) {
+			transform.position = new Vector3 (player.position.x, player.position.y, transform.position.z);
+		} else {
+			lockCamera = true;
+			transform.position = new Vector3 (player.position.x, player.position.y, transform.position.z);
+			lockCamera = false;
+		}
 	}
 	
 	

@@ -17,7 +17,6 @@ public class MapLimit : MonoBehaviour {
 		if (collider.CompareTag ("Player")) {
 			//GetComponentInParent<Stage0>().Restart();
 			MasterPlayer master = MasterPlayer.mainPlayer;
-			//Application.LoadLevel (Application.loadedLevel);
 			master.Restart();
 		}
 	}
