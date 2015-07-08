@@ -143,6 +143,10 @@ Prefab:
       propertyPath: deflect
       value: 
       objectReference: {fileID: 8300000, guid: 3cc3dd58ec5604f488f3836d2fc3fc9a, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113114}

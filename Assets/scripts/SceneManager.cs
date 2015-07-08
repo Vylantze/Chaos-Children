@@ -4,7 +4,7 @@ using System.Collections;
 
 public class SceneManager : MonoBehaviour {
 	public static SceneManager manager;
-	public string[] scenes = { "title_screen", "tutorial"};
+	public string[] scenes = { "title_screen", "tutorial", "tutorialBoss"};
 	public int currentScene = 0;
 	public bool isPaused = false;
 
@@ -66,9 +66,8 @@ public class SceneManager : MonoBehaviour {
 	}
 
 	public void loadScene(string sceneName) {
-		Debug.Log ("stuff");
 		MasterPlayer.mainPlayer.enableAll (true);
-		MasterPlayer.mainPlayer.reset ();
+		//MasterPlayer.mainPlayer.reset ();
 		Application.LoadLevel (sceneName);
 	}
 
@@ -94,11 +93,15 @@ public class SceneManager : MonoBehaviour {
 		loadScene ();
 	}
 
+	public void nextLevel() {
+		MasterPlayer.mainPlayer.Restart();
+		MasterPlayer.mainPlayer.loadedFromFile = false;
+		Application.LoadLevel(nextScene ());
+	}
+
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.tag == "Player") {
-			MasterPlayer.mainPlayer.Restart();
-			MasterPlayer.mainPlayer.loadedFromFile = false;
-			Application.LoadLevel(nextScene ());
+			nextLevel ();
 		}
 	}
 }

@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour {
 	public float damage_dealt = 1f;
 	public AudioClip explosion;
 	public AudioClip hit;
+	public EnemyGun gun;
 
 	// Use this for initialization
 	void Start () {
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour {
 
 		if(dead) {
 			dead = false; // only need to do this once
+			gun.enabled = false;
 			transform.tag = "ToBeDestroyed";
 			if (master) {
 				Scatter();

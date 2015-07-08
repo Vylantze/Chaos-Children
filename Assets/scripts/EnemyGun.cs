@@ -32,6 +32,7 @@ public class EnemyGun : MonoBehaviour {
 		} else {
 			player = GameObject.Find("Platformer").transform;
 		}
+		timer = Time.time + 1f;
 	}
 	
 	// Update is called once per frame

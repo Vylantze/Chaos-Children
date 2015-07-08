@@ -5,11 +5,12 @@ public class ShipController : PlayerController {
 
 	public float max = 20f;
 
-	public MasterPlayer master;
+	private MasterPlayer master;
 
 	private Rigidbody2D rb2d;
 	private Sprite sprite;
 	Collider2D[] colliders;
+	public Animator charge;
 
 	// Use this for initialization
 	void Start () {
@@ -44,8 +45,10 @@ public class ShipController : PlayerController {
 
 	public void colliderEnabled(bool value) {
 		foreach (Collider2D collider in colliders) {
-			collider.enabled = value;
-			collider.isTrigger = !value;
+			if (collider!=null) {
+				collider.enabled = value;
+				collider.isTrigger = !value;
+			}
 		}
 	}
 
@@ -73,5 +76,9 @@ public class ShipController : PlayerController {
 		reset ();
 		colliderEnabled (false);
 		spriteEnabled (false);
+	}
+
+	void OnTriggerEnter2D(Collider2D collider) {
+		master.triggerCheck (collider);
 	}
 }

@@ -11,3 +11,5 @@ EditorBuildSettings:
     path: Assets/title_screen.unity
   - enabled: 1
     path: Assets/tutorial.unity
+  - enabled: 1
+    path: Assets/tutorialBoss.unity

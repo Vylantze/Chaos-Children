@@ -26,14 +26,14 @@ public class MasterPlayer : PlayerController {
 		} else if (mainPlayer!=this) {
 			Destroy (gameObject);
 		}
+		gun = GetComponentInChildren<GunScript> ();
+		ship = GetComponentInChildren<ShipController> ();
+		platformer = GetComponentInChildren<PlatformController> ();
 	}
 
 	void Start () {
 		saved_before = false;
 		loadedFromFile = false;
-		gun = GetComponentInChildren<GunScript> ();
-		ship = GetComponentInChildren<ShipController> ();
-		platformer = GetComponentInChildren<PlatformController> ();
 		reset ();
 	}
 
@@ -56,7 +56,9 @@ public class MasterPlayer : PlayerController {
 			female = !female;
 			// true is female
 			// false is male
-			loadAnimator ();
+			if (!shipMode) {
+				loadAnimator ();
+			}
 		}
 		if (!dead) {
 			colourChange ();
@@ -82,18 +84,22 @@ public class MasterPlayer : PlayerController {
 
 	public void Restart() {
 		reset();
-		Application.LoadLevel (Application.loadedLevel);
+	Application.LoadLevel (Application.loadedLevel);
 		PlatformCamera camera = PlatformCamera.mainCamera;
-		camera.lockCamera = true;
-		camera.enabled = false;
-		loadFromFile ();
+		if (camera!=null) {
+			camera.lockCamera = true;
+			camera.enabled = false;
+		}
 		if (saved_before) {
+			loadFromFile ();
 			mainPlayer.loadPosition (); 
 		}
-		camera.transform.position = transform.position;
 		reset ();
-		camera.lockCamera = false;
-		camera.enabled = true;
+		if (camera!=null) {
+			camera.transform.position = transform.position;
+			camera.lockCamera = false;
+			camera.enabled = true;
+		}
 	}
 
 	public void SetTrigger(string value) {
@@ -105,14 +111,15 @@ public class MasterPlayer : PlayerController {
 		if (!shipMode) {
 			platformer.enabled = true;
 			loadAnimator();
+			gun.reset ();
 			platformer.reset();
 			ship.disable ();
 		} else {
 			ship.enabled = true; 
 			ship.reset();
+			gun.reset ();
 			platformer.disable ();
 		}
-		gun.reset ();
 	}
 
 	public void enableAll(bool value) {
@@ -134,8 +141,8 @@ public class MasterPlayer : PlayerController {
 	public void Death(){
 		if (!dead) {
 			dead = true;
-			if (!shipMode) {
-				PlatformCamera camera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<PlatformCamera> ();
+			PlatformCamera camera = PlatformCamera.mainCamera;
+			if (camera != null) {
 				camera.lockCamera = true;
 				anim.SetBool ("dead", true);
 			}
@@ -143,10 +150,12 @@ public class MasterPlayer : PlayerController {
 			foreach (Collider2D collider in colliders) {
 				collider.isTrigger = true;
 			}
-			Rigidbody2D rb2d = transform.GetComponentInChildren<Rigidbody2D> ();
+			Rigidbody2D rb2d;
 			if (!shipMode) {
+				rb2d = platformer.GetComponent<Rigidbody2D>();
 				platformer.enabled = false;
 			} else {
+				rb2d = ship.GetComponent<Rigidbody2D>();
 				ship.enabled = false;
 			}
 			rb2d.velocity = Vector2.zero;
@@ -154,9 +163,8 @@ public class MasterPlayer : PlayerController {
 			rb2d.gravityScale = 1f;
 		}
 	}
-
-	void OnTriggerEnter2D(Collider2D collider) {
-		if (collider.CompareTag ("EnemyBullet")&&!dead) {
+	public void triggerCheck(Collider2D collider) {
+		if (collider.CompareTag ("EnemyBullet")) {
 			Death ();
 		}
 	}

@@ -3008,6 +3008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPosition: {fileID: 439802}
   spawnPoint: {x: 0, y: 0, z: 0}
+  platformStage: 1
 --- !u!114 &11435446
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -64,7 +64,7 @@
      <Compile Include="Assets\scripts\STATUS.cs" />
      <Compile Include="Assets\scripts\SceneManager.cs" />
      <Compile Include="Assets\scripts\ShipController.cs" />
-     <Compile Include="Assets\scripts\Stage0.cs" />
+     <Compile Include="Assets\scripts\Stage.cs" />
      <Compile Include="Assets\scripts\WallScript.cs" />
      <Compile Include="Assets\scripts\snowfield.cs" />
  <Reference Include="UnityEngine.UI">

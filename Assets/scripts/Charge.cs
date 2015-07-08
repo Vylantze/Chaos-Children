@@ -24,7 +24,10 @@ public class Charge : MonoBehaviour {
 	public int totalChargeLevels = 3; // maximum 3 charges
 	public float chargeTime = 1f; 	// charging times before max - *3 of charge time to get max charge
 	private float chargeTimer = 0f;
-	public Animator charge_anim;
+
+	public Animator ship_charge;
+	public Animator platformer_charge;
+	private Animator charge_anim;
 
 	private bool reset_mode = false;
 	
@@ -45,7 +48,7 @@ public class Charge : MonoBehaviour {
 			}
 			// UPDATES REGARDING CHARGED SHOTS
 			// if charge mode and holding fire button
-			if (Input.GetButton ("FireBullet")) { 
+			if (Input.GetButton ("FireBullet")) {
 				if (time >= chargeTimer && chargeLevel <= totalChargeLevels) { // if charged for a certain time
 					charge (); // activate charge and increase charge level
 					chargeTimer = time + chargeTime; // reset timer
@@ -107,7 +110,6 @@ public class Charge : MonoBehaviour {
 				AudioSource.PlayClipAtPoint (gun.normalShot, transform.position);
 			}
 		
-			chargedShot.GetComponent<SpriteRenderer> ().enabled = true;
 			if (master.shipMode) { // if it is ship mode, just fire upwards
 				chargedShot.velocity = new Vector2 (0f, gun.bullet_speed);
 			} else {
@@ -115,6 +117,7 @@ public class Charge : MonoBehaviour {
 				master.setCharge (0f); // reset 'charging' layer weight to 0
 				chargedShot.velocity = new Vector2 (Mathf.Sign (chargedShot.transform.localScale.x) * gun.bullet_speed, 0f);
 			}
+			chargedShot.GetComponent<SpriteRenderer> ().enabled = true;
 		}
 		charge_anim.SetBool("charge", false);
 		charge_anim.SetInteger("charge_level", 0); // reset
@@ -126,19 +129,19 @@ public class Charge : MonoBehaviour {
 	void charge() {
 		numShots = 0;
 		if (chargedShot==null) {
-			if (!master.shipMode) {
-				master.setCharge(1f); // set 'charging' layer to activate
-			}
 			charge_anim.SetBool("charge", true);
 			chargedShot = Instantiate (gun.bullet, gun.firingLocation.position, Quaternion.identity) as Rigidbody2D;
 			chargedShot.gameObject.SetActive(true);
 			chargedCollider = chargedShot.GetComponent<CircleCollider2D>();
 			chargedCollider.enabled = false;// disable the collider first
-			chargedShot.GetComponent<SpriteRenderer>().enabled = false;
 			script = chargedShot.GetComponent<BulletScript>(); // assign the script
 			if (master.shipMode){ 
 				chargedShot.rotation = 90; // 270 degrees means facing north
 			}
+			else {
+				master.setCharge(1f); // set 'charging' layer to activate
+			}
+			chargedShot.GetComponent<SpriteRenderer>().enabled = false;
 		} else { //if (chargeLevel<=totalCharge) 
 			Vector3 size = chargedShot.transform.localScale;
 			chargedShot.transform.localScale = new Vector3(size.x*1.5f, size.y*1.5f, 1f);
@@ -193,6 +196,12 @@ public class Charge : MonoBehaviour {
 		chargeTimer = 0f;
 		firingDone = true;
 		// reset charge animation
+		if (master.shipMode) {
+			charge_anim = ship_charge;
+		} else {
+			charge_anim = platformer_charge;
+		}
+		charge_anim.GetComponent<SpriteRenderer> ().enabled = true;
 		charge_anim.SetBool("charge", false);
 		charge_anim.SetInteger("charge_level", 0); // reset
 		reset_mode = false;

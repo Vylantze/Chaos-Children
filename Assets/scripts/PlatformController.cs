@@ -34,6 +34,7 @@ public class PlatformController : PlayerController{
 	public float jumpForce = 1000f;
 	public GameObject female_chara;
 	public GameObject male_chara;
+	public Animator charge;
 
 	private MasterPlayer master;
 	private Rigidbody2D rb2d;
@@ -121,8 +122,10 @@ public class PlatformController : PlayerController{
 
 	public void colliderEnabled(bool value) {
 		foreach (Collider2D collider in colliders) {
-			collider.enabled = value;
-			collider.isTrigger = !value;
+			if (collider!=null) {
+				collider.enabled = value;
+				collider.isTrigger = !value;
+			}
 		}
 	}
 
@@ -144,10 +147,15 @@ public class PlatformController : PlayerController{
 		}
 	}
 
+
 	public void disable() {
 		reset ();
 		rb2d.gravityScale = 0f;
 		colliderEnabled (false);
 		spriteEnabled (false);
+	}
+
+	void OnTriggerEnter2D(Collider2D collider) {
+		master.triggerCheck (collider);
 	}
 }
