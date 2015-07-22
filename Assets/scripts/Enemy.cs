@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour {
 	public float HP = 1f;
-	private Rigidbody2D rb2d;
+	protected Rigidbody2D rb2d;
 	public bool dead = false;
 	public float deathForceMax = 250f;
 	public float deathForceMin = 50f;
@@ -37,7 +37,9 @@ public class Enemy : MonoBehaviour {
 
 		if(dead) {
 			dead = false; // only need to do this once
-			gun.enabled = false;
+			if (gun!=null) {
+				gun.enabled = false;
+			}
 			transform.tag = "ToBeDestroyed";
 			if (master) {
 				Scatter();
@@ -52,7 +54,7 @@ public class Enemy : MonoBehaviour {
 		return rb2d;
 	}
 
-	void Scatter() {
+	protected void Scatter() {
 		Enemy[] enemySections = GetComponentsInChildren<Enemy> (); // get all sub components
 		foreach (Enemy sub in enemySections) {
 			sub.dead = true;
@@ -70,7 +72,7 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	void Death() {
+	protected void Death() {
 		Collider2D[] colliders = GetComponents<Collider2D>();
 		foreach (Collider2D collider in colliders) {
 			collider.isTrigger = true;
@@ -94,7 +96,7 @@ public class Enemy : MonoBehaviour {
 		// fly towards direction
 	}
 
-	void OnTriggerEnter2D(Collider2D collider) {
+	protected void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.CompareTag ("Bullet")&&transform.tag!="ToBeDestroyed") {
 			BulletScript bullet = collider.GetComponent<BulletScript>();
 

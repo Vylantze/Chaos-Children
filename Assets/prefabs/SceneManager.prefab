@@ -8,7 +8,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 477930}
-  - 61: {fileID: 6197990}
   - 114: {fileID: 11442338}
   m_Layer: 12
   m_Name: SceneManager
@@ -29,19 +28,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!61 &6197990
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100428}
-  m_Enabled: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 60.5, y: 9.63000011}
-  serializedVersion: 2
-  m_Size: {x: 5.5999999, y: .419999987}
 --- !u!114 &11442338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -59,6 +45,7 @@ MonoBehaviour:
   - tutorialBoss
   currentScene: 0
   isPaused: 0
+  cutSceneMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

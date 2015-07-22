@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="black" tilewidth="32" tileheight="32" spacing="10">
+  <image source="download (1).jpg" width="275" height="184"/>
+ </tileset>
+ <tileset firstgid="25" name="tank_turret" tilewidth="32" tileheight="32">
+  <image source="../tank_turret.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="41" name="grey" tilewidth="32" tileheight="32">
+  <image source="../1024px-Color_icon_gray_v2.svg.png" width="1024" height="1024"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt3EEKgzAQBdAR72Ghgt7A6zdHM6GLqii0kkUK78Ewi7/7IduJAOCOpd/Pq3tP6n7LqKN0OeT9iE/nadP5txl1lC6feY9x/geOWbrIqKN0OeU9x/l7HLN0kQEAAAAAAAAAAAAAAAAAAAAAAAD8K3ck2+KOZFvckWyLO5IAAAAAAAAAAAAAAAAAAADQjhU0MTZP
+  </data>
+ </layer>
+</map>

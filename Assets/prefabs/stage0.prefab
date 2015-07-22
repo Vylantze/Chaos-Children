@@ -251,6 +251,7 @@ GameObject:
   - 61: {fileID: 6146148}
   - 61: {fileID: 6188922}
   - 61: {fileID: 6157432}
+  - 61: {fileID: 6187402}
   m_Layer: 12
   m_Name: StageManager
   m_TagString: Untagged
@@ -2407,6 +2408,19 @@ BoxCollider2D:
   m_Offset: {x: 45.0577087, y: 8.98206711}
   serializedVersion: 2
   m_Size: {x: 27.0735321, y: 1.96412754}
+--- !u!61 &6187402
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 136576}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 60.5499992, y: 10.3999996}
+  serializedVersion: 2
+  m_Size: {x: 5.9000001, y: .219999999}
 --- !u!61 &6188922
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -2849,6 +2863,7 @@ MonoBehaviour:
   damage_dealt: 4
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11416294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2910,6 +2925,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11428966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2930,6 +2946,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11429778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2950,6 +2967,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11432050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2995,6 +3013,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11435076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3009,6 +3028,7 @@ MonoBehaviour:
   startPosition: {fileID: 439802}
   spawnPoint: {x: 0, y: 0, z: 0}
   platformStage: 1
+  boss: {fileID: 0}
 --- !u!114 &11435446
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3029,6 +3049,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11435756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3062,6 +3083,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11444626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3194,6 +3216,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11457356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3227,6 +3250,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11463750
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3258,6 +3282,7 @@ MonoBehaviour:
   damage_dealt: 1
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11467136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3318,6 +3343,7 @@ MonoBehaviour:
   damage_dealt: 4
   explosion: {fileID: 8300000, guid: 59f01b7c1adadc34d8083fa0bc0ff092, type: 3}
   hit: {fileID: 8300000, guid: 1230d518eb8d8444d8fe84897b6c221d, type: 3}
+  gun: {fileID: 0}
 --- !u!114 &11475944
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -1,15 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\SceneManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\scripts\EnemyGun.cs">
     <Files>
-      <File FileName="Assets\scripts\EnemyGun.cs" Line="84" Column="42" />
-      <File FileName="Assets\scripts\Stage0.cs" Line="17" Column="36" />
-      <File FileName="Assets\scripts\MasterPlayer.cs" Line="120" Column="17" />
-      <File FileName="Assets\scripts\Enemy.cs" Line="96" Column="39" />
-      <File FileName="Assets\scripts\SceneManager.cs" Line="7" Column="71" />
-      <File FileName="Assets\scripts\PlatformController.cs" Line="132" Column="26" />
-      <File FileName="Assets\scripts\ShipController.cs" Line="13" Column="25" />
-      <File FileName="Assets\scripts\Charge.cs" Line="204" Column="62" />
+      <File FileName="Assets\scripts\EnemyGun.cs" Line="77" Column="20" />
+      <File FileName="Assets\scripts\EnemyBoss.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\SceneManager.cs" Line="47" Column="14" />
+      <File FileName="Assets\scripts\PlatformController.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\Stage.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\ShipController.cs" Line="1" Column="1" />
+      <File FileName="Assets\scripts\CutSceneManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

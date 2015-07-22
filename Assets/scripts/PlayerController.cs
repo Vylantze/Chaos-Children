@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
 	public bool female = true;
 	// colour change
 	public bool[] elements = {true, false, false, false}; // elements available
-	public string[] commands = {"None", "FireMode", "ThunderMode", "IceMode"};
+	//public string[] commands = {"ColourNext","ColourPrevious"};//{"None", "FireMode", "ThunderMode", "IceMode"};
 	// 0 = NONE = true;
 	// others are in order
 
@@ -187,6 +187,7 @@ public class SaveData {
 	public string stage_name;
 	public float x_coor;
 	public float y_coor;
+	public bool allowVerticalMovementInShipMode;
 
 	public SaveData(PlayerController player) {
 		save (player);

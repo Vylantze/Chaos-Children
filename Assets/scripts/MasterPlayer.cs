@@ -50,6 +50,11 @@ public class MasterPlayer : PlayerController {
 		platformer.setAnimator(anim);
 	}
 
+	void loadShip() {
+		ship.female_chara.GetComponent<SpriteRenderer> ().enabled = female;
+		ship.male_chara.GetComponent<SpriteRenderer> ().enabled = !female;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown("Switch Mode")&&STATUS.debug) {
@@ -59,9 +64,21 @@ public class MasterPlayer : PlayerController {
 			if (!shipMode) {
 				loadAnimator ();
 			}
+			else {
+				loadShip ();
+			}
 		}
+
+		if (Input.GetButtonDown ("ColourNext")) {
+			colourChange(true);
+		}
+
+		if (Input.GetButtonDown ("ColourPrevious")) {
+			colourChange (false);
+		}
+
 		if (!dead) {
-			colourChange ();
+			//colourChange ();
 		}
 		/*
 		if (Input.GetButtonDown("SwitchScene")&&STATUS.debug) {
@@ -70,7 +87,7 @@ public class MasterPlayer : PlayerController {
 			platformer.gameObject.SetActive(!shipMode);
 		}*/
 	}
-
+	/* // old version
 	void colourChange() {
 		for (int i=1; i<4; i++) { // start from 1, aka fire
 			if (Input.GetButtonDown (commands[i]) && // if correct command
@@ -80,11 +97,35 @@ public class MasterPlayer : PlayerController {
 				break; // once colour changed, can break loop
 			}
 		}
+	}//*/
+
+	void colourChange(bool increase) {
+		ModeChange mode = GetComponent<ModeChange> ();
+		int nextColour = mode.currentColour;
+		for (int i=0; i<4; i++) {
+			if (increase) {
+				nextColour++;
+				if (nextColour>=4) {
+					nextColour=1;
+				}
+			}else {
+				nextColour--;
+				if (nextColour<=0) {
+					nextColour=3;
+				}
+			}
+
+			if (elements [nextColour]) { // if valid
+				AudioSource.PlayClipAtPoint(switch_mode, transform.position);
+				mode.currentColour = nextColour;
+				break;
+			}
+		}
 	}
 
 	public void Restart() {
 		reset();
-	Application.LoadLevel (Application.loadedLevel);
+		Application.LoadLevel (Application.loadedLevel);
 		PlatformCamera camera = PlatformCamera.mainCamera;
 		if (camera!=null) {
 			camera.lockCamera = true;
@@ -117,6 +158,7 @@ public class MasterPlayer : PlayerController {
 		} else {
 			ship.enabled = true; 
 			ship.reset();
+			loadShip ();
 			gun.reset ();
 			platformer.disable ();
 		}
@@ -190,5 +232,18 @@ public class MasterPlayer : PlayerController {
 	public void save(Vector3 position) {
 		saved_before = true;
 		saveToFile ("autoSave", position.x, position.y);
+	}
+
+	public void cutSceneMode(bool value) {
+		if (value) {// if true, reduce velocity to zero 
+			Rigidbody2D rb2d;
+			if (!shipMode) {
+				rb2d = platformer.GetComponent<Rigidbody2D> ();
+			} else {
+				rb2d = ship.GetComponent<Rigidbody2D> ();
+			}
+			rb2d.velocity = Vector2.zero;
+		}
+		enableAll (!value); // opposite of true, if mode is activated
 	}
 }

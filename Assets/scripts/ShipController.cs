@@ -8,9 +8,12 @@ public class ShipController : PlayerController {
 	private MasterPlayer master;
 
 	private Rigidbody2D rb2d;
-	private Sprite sprite;
+	//private Sprite sprite;
 	Collider2D[] colliders;
 	public Animator charge;
+	public GameObject female_chara;
+	public GameObject male_chara;
+	public bool allowVerticalMovementInShipMode = false;
 
 	// Use this for initialization
 	void Start () {
@@ -32,9 +35,13 @@ public class ShipController : PlayerController {
 		// put limiters on speed here
 		if (xvel > max) { xvel = (int)max; } 
 		else if (xvel < -max) { xvel = (int)-max; }
-		
-		if (yvel > max) { yvel = (int)max; } 
-		else if (yvel < -max) { yvel = (int)-max; }
+
+		if (allowVerticalMovementInShipMode) {
+			if (yvel > max) { yvel = (int)max; } 
+			else if (yvel < -max) { yvel = (int)-max; }
+		}else {
+			yvel = rb2d.velocity.y;
+		}
 		
 		//if (jump && yvel == 0f) {
 		//	rb2d.AddForce (new Vector2 (0f, jumpForce));
@@ -44,10 +51,12 @@ public class ShipController : PlayerController {
 	}
 
 	public void colliderEnabled(bool value) {
-		foreach (Collider2D collider in colliders) {
-			if (collider!=null) {
-				collider.enabled = value;
-				collider.isTrigger = !value;
+		if (colliders != null) {
+			foreach (Collider2D collider in colliders) {
+				if (collider != null) {
+					collider.enabled = value;
+					collider.isTrigger = !value;
+				}
 			}
 		}
 	}
@@ -56,6 +65,9 @@ public class ShipController : PlayerController {
 	public void reset() {
 		transform.localPosition = Vector3.zero;
 		colliderEnabled (true);
+		if (rb2d == null) {
+			Start();
+		}
 		rb2d.gravityScale = 0f;
 		rb2d.velocity = Vector2.zero;
 		xvel = yvel = 0f;

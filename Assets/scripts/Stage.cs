@@ -5,7 +5,6 @@ public class Stage : MonoBehaviour {
 	public Transform startPosition;
 	public Vector3 spawnPoint;
 	public bool platformStage = true;
-	public Enemy boss;
 	// Use this for initialization
 	void Start () {
 		MasterPlayer master = MasterPlayer.mainPlayer;
@@ -27,11 +26,6 @@ public class Stage : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if (!platformStage) {
-			if (boss.HP<0||boss==null) {
-				SceneManager.manager.nextLevel();
-			}
-		}
 	}
 
 	void save() {
@@ -42,6 +36,12 @@ public class Stage : MonoBehaviour {
 		if (collider.tag == "Player") {
 			// activate save function
 			save ();
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D collision) {
+		if (collision.collider.tag == "Player") {
+			SceneManager.manager.nextLevel ();
 		}
 	}
 }

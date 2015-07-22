@@ -40,12 +40,15 @@ public class PlatformController : PlayerController{
 	private Rigidbody2D rb2d;
 	Collider2D[] colliders;
 
+	// movement
+	private bool allowJump = false;
+
 	// Use this for initialization
 	void Start () {
 		master = MasterPlayer.mainPlayer;
 		colliders = GetComponentsInChildren<Collider2D>();
 		rb2d = GetComponentInParent<Rigidbody2D> ();
-		anim = GetComponentInChildren<Animator> ();
+		//anim = GetComponentInChildren<Animator> ();
 	}
 
 	// Update is called once per frame
@@ -73,6 +76,35 @@ public class PlatformController : PlayerController{
 		anim = value;
 	}
 
+	
+	void OnCollisionStay2D(Collision2D collision) {
+		if (collision.collider.CompareTag("ground") ){
+			ContactPoint2D[] contacts = collision.contacts;
+			Vector2 point = contacts[contacts.Length/2].point;
+
+			// as long as point is below the character's collider
+			if ((point.y <transform.position.y-0.69f))// basically, height of chara is 1.4
+			    //&&(Mathf.Abs(point.x-transform.position.x)>0.2) )   // and width of chara is 0.4
+			    //&&((point.x <transform.position.x-0.2f)||(point.x >transform.position.x+0.2f)))
+				{
+				allowJump = true;
+				anim.SetBool ("in_air", false);
+				master.in_air = false;
+			}
+			else {
+				allowJump = false;
+				anim.SetBool ("in_air", true);
+				master.in_air = true;
+			}
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D collision) {
+		allowJump = false;
+		anim.SetBool ("in_air", true);
+		master.in_air = true;
+	}
+
 	public void movementPlatform() { // can access stage directly, but will receive error if not on stage
 		// put limiters on speed here
 		if (xvel > maxHoriSpeed) { xvel = (int)maxHoriSpeed; } 
@@ -92,7 +124,8 @@ public class PlatformController : PlayerController{
 			}
 		} else {
 		}//*/
-		
+
+		/* // old version
 		anim.SetBool ("in_air", true);
 		master.in_air = true;
 		foreach(Collider2D collider in colliders) {
@@ -101,9 +134,10 @@ public class PlatformController : PlayerController{
 				master.in_air = false;
 				break;
 			}
-		}
+		}//*/
 
-		if (jump && !master.in_air) {
+		if (jump && allowJump) {//!master.in_air) {
+			y_vel = 0;
 			rb2d.AddForce (new Vector2 (0f, jumpForce));
 			anim.SetTrigger("jump");
 		}
@@ -121,15 +155,20 @@ public class PlatformController : PlayerController{
 	}
 
 	public void colliderEnabled(bool value) {
-		foreach (Collider2D collider in colliders) {
-			if (collider!=null) {
-				collider.enabled = value;
-				collider.isTrigger = !value;
+		if (colliders != null) {
+			foreach (Collider2D collider in colliders) {
+				if (collider != null) {
+					collider.enabled = value;
+					collider.isTrigger = !value;
+				}
 			}
 		}
 	}
 
 	public void reset() {
+		if (colliders == null||rb2d==null) {
+			Start ();
+		}
 		transform.localPosition = Vector3.zero;
 		colliderEnabled (true);
 		rb2d.gravityScale = 1f;

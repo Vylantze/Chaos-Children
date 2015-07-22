@@ -1,0 +1,231 @@
+fileFormatVersion: 2
+guid: 64a83ea6cd572904e90aff45f3f57f97
+timeCreated: 1437589454
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: fireball_0
+    21300002: fireball_1
+    21300004: fireball_2
+    21300006: fireball_3
+    21300008: fireball_4
+    21300010: fireball_5
+    21300012: fireball_6
+    21300014: fireball_7
+    21300016: fireball_8
+    21300018: fireball_9
+    21300020: fireball_10
+    21300022: fireball_11
+    21300024: fireball_12
+    21300026: fireball_13
+    21300028: fireball_14
+    21300030: fireball_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 8
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 34
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: fireball_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 203
+        width: 44
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_1
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 200
+        width: 43
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_2
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 200
+        width: 39
+        height: 34
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_3
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 200
+        width: 34
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_4
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 135
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_5
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 136
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_6
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 136
+        width: 40
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_7
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 136
+        width: 44
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_8
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 75
+        width: 44
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_9
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 75
+        width: 45
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_10
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 74
+        width: 40
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_11
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 75
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_12
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 8
+        width: 30
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_13
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 7
+        width: 33
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_14
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 11
+        width: 40
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fireball_15
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 11
+        width: 43
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

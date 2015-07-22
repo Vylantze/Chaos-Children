@@ -4,9 +4,11 @@ using System.Collections;
 
 public class SceneManager : MonoBehaviour {
 	public static SceneManager manager;
-	public string[] scenes = { "title_screen", "tutorial", "tutorialBoss"};
+	private string[] scenes = {"title_screen", "tutorial", "tutorialBoss", "stage1", "stage1Boss"};
 	public int currentScene = 0;
 	public bool isPaused = false;
+
+	public bool cutSceneMode = false; // cutscene by default off
 
 	// Use this for initialization
 	void Awake () {
@@ -53,7 +55,7 @@ public class SceneManager : MonoBehaviour {
 		}
 	}
 
-	public string nextScene() {
+	private string nextScene() {
 		currentScene++;
 		if (currentScene >= scenes.Length) {
 			currentScene = 0;
@@ -101,7 +103,8 @@ public class SceneManager : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		if (collider.tag == "Player") {
-			nextLevel ();
+			// trigger cutscene instead
+			cutSceneMode = true;
 		}
 	}
 }

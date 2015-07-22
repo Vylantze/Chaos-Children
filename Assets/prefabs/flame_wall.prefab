@@ -10,7 +10,6 @@ GameObject:
   - 4: {fileID: 449150}
   - 212: {fileID: 21221686}
   - 61: {fileID: 6183150}
-  - 95: {fileID: 9536862}
   - 114: {fileID: 11459234}
   - 114: {fileID: 11414484}
   m_Layer: 12
@@ -45,23 +44,6 @@ BoxCollider2D:
   m_Offset: {x: -.0265007019, y: .659604013}
   serializedVersion: 2
   m_Size: {x: .780876338, y: 1.31919086}
---- !u!95 &9536862
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 105948}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f42c67d7771e7594eaa9eae4a159d78e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11414484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -74,6 +56,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentColour: 0
+  isObject: 0
+  activePower: []
 --- !u!114 &11459234
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -5,6 +5,7 @@ public class Flamethrower : MonoBehaviour {
 	public float force;
 	ModeChange colour;
 	public int type = ModeChange.FIRE;
+	private bool allowBoost = true;
 	// Use this for initialization
 	void Start () {
 		colour = GetComponent<ModeChange>();
@@ -16,9 +17,16 @@ public class Flamethrower : MonoBehaviour {
 	
 	}
 
+	void OnTriggerExit2D(Collider2D collider) {
+		if (collider.CompareTag ("Player")) {
+			allowBoost = true;
+		}
+	}
+
 	void OnTriggerEnter2D(Collider2D collider) {
-		if (collider.CompareTag ("Player") ){
-			MasterPlayer master = collider.GetComponentInParent<MasterPlayer>();
+		if (collider.CompareTag ("Player")&&allowBoost ){
+			allowBoost = false;
+			MasterPlayer master = MasterPlayer.mainPlayer;
 			bool sameColour = colour.compare(collider);
 			if (sameColour) { // if same colour, give a boost
 				if (!master.dead) { // and if chara not dead

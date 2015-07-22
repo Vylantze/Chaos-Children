@@ -6,14 +6,14 @@ public class Charge : MonoBehaviour {
 	MasterPlayer master;
 	// bullet stuff
 	bool firingDone = true;
-	private int numShots = 0;
-	public int totalShotsAllowed = 3;
+	public int numShots = 0;
+	public int totalShotsAllowed = 2;
 	
 	// Interval timer (between every totalShots
-	public float waitTime = 3f;
+	public float waitTime = 1f;
 	private float timer = 0f;
 	// time between each individual shot
-	public float shotWait = 0.4f;
+	public float shotWait = 0.15f;
 	private float shotWaitTimer = 0f;
 	
 	// charge mode
@@ -44,6 +44,8 @@ public class Charge : MonoBehaviour {
 			// ATTACK
 			if (firingDone && Input.GetButtonDown ("FireBullet")) { 
 				// if charged mode and valid for firing
+				firingDone = false;
+				fire ();
 				chargeTimer = time + chargeTime; // start a charge timer
 			}
 			// UPDATES REGARDING CHARGED SHOTS
@@ -74,7 +76,10 @@ public class Charge : MonoBehaviour {
 			else if (Input.GetButtonUp ("FireBullet") && chargedShot != null) { // and chargedShot exists
 				fireChargedShot ();
 			} else if (Input.GetButtonUp ("FireBullet")) {
-				fire ();
+				if (firingDone) {
+					fire ();
+					firingDone = false;
+				}
 			} else if (chargedShot != null) { // else if the button not held, fire it away first chance possible
 				fireChargedShot ();
 			} else { // else basically button not held down
@@ -84,21 +89,27 @@ public class Charge : MonoBehaviour {
 				chargeLevel = 0;
 			}
 
+			/*
 			//  LIMIT NUMBER OF SHOTS FIRED
 			if (numShots >= totalShotsAllowed) {
 				firingDone = false;
 				numShots = 0;
+			}//*/
+
+			if (numShots==1) {
+				fire();
 			}
 		
 			if (!firingDone) {
 				if (time >= timer) { // if waiting time has expired
 					firingDone = true;
+					numShots = 0;
 				}
 			}
 		}
 	}
 
-	void fireChargedShot() {
+	int fireChargedShot() {
 		float time = Time.time; // current time
 		if (chargedShot != null) {
 			chargedCollider.enabled = true;
@@ -107,7 +118,13 @@ public class Charge : MonoBehaviour {
 				script.charged = true;
 				AudioSource.PlayClipAtPoint (gun.chargedShot, transform.position);
 			} else {
-				AudioSource.PlayClipAtPoint (gun.normalShot, transform.position);
+				// else don't fire anything
+				Destroy(chargedShot.gameObject);
+				if (firingDone) {
+					fire ();
+					firingDone = false;
+				}
+				return -1;
 			}
 		
 			if (master.shipMode) { // if it is ship mode, just fire upwards
@@ -124,6 +141,7 @@ public class Charge : MonoBehaviour {
 		chargeLevel = 0;
 		chargedShot = null;
 		shotWaitTimer = shotWait + time; // reset timer for normal shots also
+		return 0;
 	}
 	
 	void charge() {
@@ -152,7 +170,6 @@ public class Charge : MonoBehaviour {
 	}
 	
 	void fire() {
-		numShots++; // increment the number of shots, since it IS fired
 		float time = Time.time; // current time
 
 		if (numShots==1) { 
@@ -160,6 +177,7 @@ public class Charge : MonoBehaviour {
 		}
 
 		if (time >= shotWaitTimer) { // if wait time expired for individual shots
+			numShots++; // increment the number of shots, since it IS fired
 			shotWaitTimer = shotWait + time; // reset timer
 			// create an instance of the bullet
 			Rigidbody2D bulletInstance = Instantiate (gun.bullet, gun.firingLocation.position, Quaternion.identity) as Rigidbody2D;
@@ -196,14 +214,14 @@ public class Charge : MonoBehaviour {
 		chargeTimer = 0f;
 		firingDone = true;
 		// reset charge animation
-		if (master.shipMode) {
+		if (MasterPlayer.mainPlayer.shipMode) {
 			charge_anim = ship_charge;
 		} else {
 			charge_anim = platformer_charge;
 		}
 		charge_anim.GetComponent<SpriteRenderer> ().enabled = true;
-		charge_anim.SetBool("charge", false);
-		charge_anim.SetInteger("charge_level", 0); // reset
+		charge_anim.SetBool ("charge", false);
+		charge_anim.SetInteger ("charge_level", 0); // reset
 		reset_mode = false;
 	}
 }

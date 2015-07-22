@@ -1,0 +1,14 @@
+<Male>:Sorry... After I have seen everything that this world has to offer, I promise I'll come back and tell you lots and lots of stories!
+<Male>:So, wait just a little while longer, okay?
+<Female>:That idiot... to think he left without telling me anything.
+<Female>:I definitely, definitely won't forgive him! Even if he went on all fours and begged me, I definitely won't forgive him!
+END
+<Male>:Wow, what is this place? I never knew this kind of place existed here. Alright! I will definitely find a way out from here!
+<Female>:...I'm kind of regretting my choice to go this way. It can't be helped. I'll just keep going no matter what happens.
+END
+<Male>:Hahaha! Do you really think that this is going to stop me? This burning heart! These hot feelings! They cannot be contained by these walls!
+<Male>:I will smash through everything that stops me with my fists! I will see the world and everything that is in it!
+<Female>:Training? This kind of opponent won't even faze me. I will blast through everything in my way. I won't let anything stop me.
+END
+<Male>:I wonder what I'll find up ahead? I can't wait! 
+<Female>:I can't believe I will finally be able to see the world with my own two eyes and walk it with my own two feet. 

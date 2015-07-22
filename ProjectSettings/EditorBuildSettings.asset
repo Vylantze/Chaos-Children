@@ -13,3 +13,7 @@ EditorBuildSettings:
     path: Assets/tutorial.unity
   - enabled: 1
     path: Assets/tutorialBoss.unity
+  - enabled: 1
+    path: Assets/stage1.unity
+  - enabled: 1
+    path: Assets/stage1Boss.unity
